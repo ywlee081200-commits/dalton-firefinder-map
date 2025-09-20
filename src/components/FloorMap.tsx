@@ -30,64 +30,96 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   // Room positions based on original image coordinates (percentage-based for responsiveness)
   const roomPositions = {
     "2nd": [
-      { id: "211", x: 8, y: 45, width: 8, height: 12 },
-      { id: "212", x: 8, y: 57, width: 8, height: 12 },
-      { id: "213", x: 8, y: 69, width: 8, height: 12 },
-      { id: "214", x: 8, y: 81, width: 8, height: 12 },
-      { id: "215", x: 8, y: 93, width: 8, height: 12 },
-      { id: "216", x: 16, y: 93, width: 8, height: 12 },
-      { id: "217", x: 16, y: 81, width: 8, height: 12 },
-      { id: "218", x: 16, y: 69, width: 8, height: 12 },
-      { id: "Lab1", x: 24, y: 45, width: 12, height: 8 },
-      { id: "Lab2", x: 24, y: 53, width: 12, height: 8 },
-      { id: "Dalton Hall", x: 16, y: 15, width: 45, height: 28 },
-      { id: "Bath", x: 16, y: 45, width: 6, height: 10 },
-      { id: "stairs", x: 16, y: 55, width: 6, height: 6 },
-      { id: "Office", x: 16, y: 61, width: 6, height: 8 }
+      // Left column - rooms 211-215 (precisely positioned)
+      { id: "211", x: 8, y: 35, width: 10, height: 8 },
+      { id: "212", x: 8, y: 44, width: 10, height: 8 },
+      { id: "213", x: 8, y: 53, width: 10, height: 8 },
+      { id: "214", x: 8, y: 62, width: 10, height: 8 },
+      { id: "215", x: 8, y: 71, width: 10, height: 8 },
+      
+      // Middle column - rooms 216-218 
+      { id: "216", x: 19, y: 71, width: 10, height: 8 },
+      { id: "217", x: 19, y: 62, width: 10, height: 8 },
+      { id: "218", x: 19, y: 53, width: 10, height: 8 },
+      
+      // Middle facilities
+      { id: "Bath", x: 19, y: 35, width: 8, height: 6 },
+      { id: "stairs", x: 19, y: 42, width: 8, height: 4 },
+      { id: "Office", x: 19, y: 47, width: 8, height: 5 },
+      
+      // Lab rooms (right side)
+      { id: "Lab1", x: 30, y: 28, width: 14, height: 7 },
+      { id: "Lab2", x: 30, y: 36, width: 14, height: 7 },
+      
+      // Large Dalton Hall at top
+      { id: "Dalton Hall", x: 19, y: 8, width: 50, height: 18 }
     ],
     "1st": [
-      { id: "111", x: 8, y: 45, width: 8, height: 12 },
-      { id: "112", x: 8, y: 57, width: 8, height: 12 },
-      { id: "113", x: 8, y: 69, width: 8, height: 12 },
-      { id: "114", x: 8, y: 81, width: 8, height: 12 },
-      { id: "115", x: 8, y: 93, width: 8, height: 12 },
-      { id: "116", x: 16, y: 93, width: 8, height: 12 },
-      { id: "117", x: 16, y: 81, width: 8, height: 12 },
-      { id: "118", x: 16, y: 69, width: 8, height: 12 },
-      { id: "Kitchen", x: 24, y: 45, width: 15, height: 20 },
-      { id: "Dalton Hall", x: 16, y: 15, width: 45, height: 28 },
-      { id: "Bath", x: 16, y: 45, width: 6, height: 10 },
-      { id: "stairs", x: 16, y: 55, width: 6, height: 6 },
-      { id: "Office", x: 16, y: 61, width: 6, height: 8 }
+      // Left column - rooms 111-115
+      { id: "111", x: 8, y: 35, width: 10, height: 8 },
+      { id: "112", x: 8, y: 44, width: 10, height: 8 },
+      { id: "113", x: 8, y: 53, width: 10, height: 8 },
+      { id: "114", x: 8, y: 62, width: 10, height: 8 },
+      { id: "115", x: 8, y: 71, width: 10, height: 8 },
+      
+      // Middle column - rooms 116-118
+      { id: "116", x: 19, y: 71, width: 10, height: 8 },
+      { id: "117", x: 19, y: 62, width: 10, height: 8 },
+      { id: "118", x: 19, y: 53, width: 10, height: 8 },
+      
+      // Middle facilities
+      { id: "Bath", x: 19, y: 35, width: 8, height: 6 },
+      { id: "stairs", x: 19, y: 42, width: 8, height: 4 },
+      { id: "Office", x: 19, y: 47, width: 8, height: 5 },
+      
+      // Kitchen (right side)
+      { id: "Kitchen", x: 30, y: 28, width: 18, height: 15 },
+      
+      // Large Dalton Hall at top
+      { id: "Dalton Hall", x: 19, y: 8, width: 50, height: 18 }
     ],
     "3rd": [
-      { id: "311", x: 8, y: 45, width: 8, height: 12 },
-      { id: "312", x: 8, y: 57, width: 8, height: 12 },
-      { id: "313", x: 8, y: 69, width: 8, height: 12 },
-      { id: "314", x: 8, y: 81, width: 8, height: 12 },
-      { id: "315", x: 8, y: 93, width: 8, height: 12 },
-      { id: "316", x: 16, y: 93, width: 8, height: 12 },
-      { id: "317", x: 16, y: 81, width: 8, height: 12 },
-      { id: "318", x: 16, y: 69, width: 8, height: 12 },
-      { id: "Dalton Hall", x: 16, y: 15, width: 45, height: 28 },
-      { id: "Bath", x: 16, y: 45, width: 6, height: 10 },
-      { id: "stairs", x: 16, y: 55, width: 6, height: 6 },
-      { id: "Office", x: 16, y: 61, width: 6, height: 8 }
+      // Left column - rooms 311-315
+      { id: "311", x: 8, y: 35, width: 10, height: 8 },
+      { id: "312", x: 8, y: 44, width: 10, height: 8 },
+      { id: "313", x: 8, y: 53, width: 10, height: 8 },
+      { id: "314", x: 8, y: 62, width: 10, height: 8 },
+      { id: "315", x: 8, y: 71, width: 10, height: 8 },
+      
+      // Middle column - rooms 316-318
+      { id: "316", x: 19, y: 71, width: 10, height: 8 },
+      { id: "317", x: 19, y: 62, width: 10, height: 8 },
+      { id: "318", x: 19, y: 53, width: 10, height: 8 },
+      
+      // Middle facilities
+      { id: "Bath", x: 19, y: 35, width: 8, height: 6 },
+      { id: "stairs", x: 19, y: 42, width: 8, height: 4 },
+      { id: "Office", x: 19, y: 47, width: 8, height: 5 },
+      
+      // Large Dalton Hall at top
+      { id: "Dalton Hall", x: 19, y: 8, width: 50, height: 18 }
     ],
     "4th": [
-      { id: "411", x: 8, y: 50, width: 8, height: 12 },
-      { id: "412", x: 8, y: 62, width: 8, height: 12 },
-      { id: "413", x: 8, y: 74, width: 8, height: 12 },
-      { id: "414", x: 8, y: 86, width: 8, height: 12 },
-      { id: "415", x: 8, y: 98, width: 8, height: 12 },
-      { id: "416", x: 16, y: 98, width: 8, height: 12 },
-      { id: "417", x: 16, y: 86, width: 8, height: 12 },
-      { id: "418", x: 16, y: 74, width: 8, height: 12 },
-      { id: "art room", x: 16, y: 62, width: 8, height: 10 },
-      { id: "Bath", x: 16, y: 50, width: 6, height: 10 },
-      { id: "stairs", x: 16, y: 35, width: 6, height: 13 },
-      { id: "ROOF", x: 16, y: 15, width: 45, height: 18 },
-      { id: "ROOF2", x: 16, y: 35, width: 20, height: 13 }
+      // Left column - rooms 411-415
+      { id: "411", x: 8, y: 40, width: 10, height: 8 },
+      { id: "412", x: 8, y: 49, width: 10, height: 8 },
+      { id: "413", x: 8, y: 58, width: 10, height: 8 },
+      { id: "414", x: 8, y: 67, width: 10, height: 8 },
+      { id: "415", x: 8, y: 76, width: 10, height: 8 },
+      
+      // Middle column - rooms 416-418
+      { id: "416", x: 19, y: 76, width: 10, height: 8 },
+      { id: "417", x: 19, y: 67, width: 10, height: 8 },
+      { id: "418", x: 19, y: 58, width: 10, height: 8 },
+      
+      // Middle facilities
+      { id: "art room", x: 19, y: 49, width: 10, height: 8 },
+      { id: "Bath", x: 19, y: 40, width: 8, height: 8 },
+      { id: "stairs", x: 19, y: 30, width: 8, height: 9 },
+      
+      // ROOF areas
+      { id: "ROOF", x: 19, y: 8, width: 50, height: 15 },
+      { id: "ROOF2", x: 19, y: 24, width: 25, height: 12 }
     ]
   };
 
@@ -145,7 +177,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                   return (
                     <div
                       key={room.id}
-                      className="absolute cursor-pointer border-2 border-transparent hover:border-primary/70 hover:bg-primary/10 rounded transition-all duration-200"
+                      className="absolute cursor-pointer border-2 border-primary/30 hover:border-primary hover:bg-primary/20 rounded transition-all duration-200 hover:scale-105"
                       style={{
                         left: `${room.x}%`,
                         top: `${room.y}%`,
@@ -157,8 +189,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                     >
                       {renderFireExtinguishers(room.id, extinguisherCount)}
                       
-                      {/* Room label on hover */}
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/60 text-white text-xs font-bold rounded opacity-0 hover:opacity-100 transition-opacity duration-200">
+                      {/* Room label - always visible now */}
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-xs font-bold rounded opacity-80 hover:opacity-100 transition-opacity duration-200">
                         {room.id}
                       </div>
                     </div>
