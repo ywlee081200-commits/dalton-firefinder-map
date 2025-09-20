@@ -3,6 +3,7 @@ import { Navigation } from "./Navigation";
 import { ReportButton } from "./ReportButton";
 import { RoomInfoPanel } from "./RoomInfoPanel";
 import { EditRoomDialog } from "./EditRoomDialog";
+import { Button } from "@/components/ui/button";
 import { FloorNumber, RoomData } from "@/types/SafetyMap";
 import floor1Image from "@/assets/1.jpg";
 import floor2Image from "@/assets/2.jpg";
@@ -22,6 +23,12 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   const [isPositioningMode, setIsPositioningMode] = useState(false);
   const [isDragging, setIsDragging] = useState<string | null>(null);
   const [isResizing, setIsResizing] = useState<{ roomId: string; handle: string } | null>(null);
+  const [isDraggingUI, setIsDraggingUI] = useState<string | null>(null);
+  const [uiPositions, setUIPositions] = useState({
+    navigation: { x: 85, y: 5 },
+    reportButton: { x: 5, y: 85 },
+    backButton: { x: 50, y: 92 }
+  });
 
   const floorImages = {
     "1st": floor1Image,
@@ -146,13 +153,21 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if ((!isDragging && !isResizing) || !isPositioningMode) return;
+    if ((!isDragging && !isResizing && !isDraggingUI) || !isPositioningMode) return;
     
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     
-    if (isDragging) {
+    if (isDraggingUI) {
+      setUIPositions(prev => ({
+        ...prev,
+        [isDraggingUI]: { 
+          x: Math.max(0, Math.min(95, x)), 
+          y: Math.max(0, Math.min(95, y)) 
+        }
+      }));
+    } else if (isDragging) {
       setRoomPositions(prev => ({
         ...prev,
         [floor]: prev[floor].map(room => 
@@ -211,6 +226,15 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   const handleMouseUp = () => {
     setIsDragging(null);
     setIsResizing(null);
+    setIsDraggingUI(null);
+  };
+
+  const handleUIMouseDown = (e: React.MouseEvent, uiElement: string) => {
+    if (isPositioningMode) {
+      setIsDraggingUI(uiElement);
+      e.preventDefault();
+      e.stopPropagation();
+    }
   };
 
   const handleRoomUpdate = (roomId: string, data: RoomData) => {
@@ -251,8 +275,41 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
 
   return (
     <div className="min-h-screen safety-gradient relative overflow-hidden">
-      <Navigation onFloorSelect={onFloorSelect} currentFloor={floor} />
-      <ReportButton />
+      {/* Navigation - movable */}
+      <div 
+        className={`absolute z-50 ${isPositioningMode ? 'cursor-move' : ''}`}
+        style={{ 
+          left: `${uiPositions.navigation.x}%`, 
+          top: `${uiPositions.navigation.y}%`,
+          transform: 'translate(-50%, -50%)'
+        }}
+        onMouseDown={(e) => handleUIMouseDown(e, 'navigation')}
+      >
+        <Navigation onFloorSelect={onFloorSelect} currentFloor={floor} />
+        {isPositioningMode && (
+          <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs bg-black/60 text-white px-2 py-1 rounded whitespace-nowrap">
+            Navigation
+          </div>
+        )}
+      </div>
+      
+      {/* Report Button - movable */}
+      <div 
+        className={`absolute z-50 ${isPositioningMode ? 'cursor-move' : ''}`}
+        style={{ 
+          left: `${uiPositions.reportButton.x}%`, 
+          top: `${uiPositions.reportButton.y}%`,
+          transform: 'translate(-50%, -50%)'
+        }}
+        onMouseDown={(e) => handleUIMouseDown(e, 'reportButton')}
+      >
+        <ReportButton />
+        {isPositioningMode && (
+          <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs bg-black/60 text-white px-2 py-1 rounded whitespace-nowrap">
+            Report Button
+          </div>
+        )}
+      </div>
       
       {/* Positioning Mode Controls */}
       <div className="absolute top-4 left-4 z-50 space-y-2">
@@ -376,13 +433,28 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
             </div>
           </div>
 
-          <div className="mt-6 text-center">
-            <button
+          {/* Back to Main Map Button - movable */}
+          <div 
+            className={`absolute z-50 ${isPositioningMode ? 'cursor-move' : ''}`}
+            style={{ 
+              left: `${uiPositions.backButton.x}%`, 
+              top: `${uiPositions.backButton.y}%`,
+              transform: 'translate(-50%, -50%)'
+            }}
+            onMouseDown={(e) => handleUIMouseDown(e, 'backButton')}
+          >
+            <Button
               onClick={onBackToHome}
-              className="text-primary hover:text-primary/80 underline font-medium"
+              variant="outline"
+              className="bg-card/95 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground shadow-lg"
             >
               ← Back to Main Map
-            </button>
+            </Button>
+            {isPositioningMode && (
+              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs bg-black/60 text-white px-2 py-1 rounded whitespace-nowrap">
+                Back Button
+              </div>
+            )}
           </div>
         </div>
       </main>
