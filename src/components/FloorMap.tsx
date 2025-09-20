@@ -198,7 +198,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     if (count === 0) return null;
     
     return (
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-6 flex items-center gap-0.5 pointer-events-none">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-8 flex items-center gap-0.5 pointer-events-none">
         {Array.from({ length: Math.min(count, 6) }, (_, i) => (
           <div 
             key={i} 
@@ -296,16 +296,16 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                     >
                       {renderFireExtinguishers(room.id, extinguisherCount)}
                       
-                      {/* Room label */}
-                      <div className={`absolute inset-0 flex items-center justify-center text-xs font-bold rounded transition-opacity duration-200 ${
+                      {/* Room label - replaces original image text */}
+                      <div className={`absolute inset-0 flex items-center justify-center text-sm font-bold transition-opacity duration-200 ${
                         isPositioningMode 
                           ? "bg-accent/60 text-white" 
-                          : "bg-black/40 text-white opacity-80 hover:opacity-100"
+                          : "text-black"
                       }`}>
                         <div className="text-center pointer-events-none">
-                          <div>{room.id}</div>
+                          <div className="bg-white/90 px-1 rounded shadow-sm">{room.id}</div>
                           {isPositioningMode && (
-                            <div className="text-[10px] mt-1">
+                            <div className="text-[10px] mt-1 bg-black/60 text-white px-1 rounded">
                               {Math.round(room.x)},{Math.round(room.y)} | {Math.round(room.width)}×{Math.round(room.height)}
                             </div>
                           )}
