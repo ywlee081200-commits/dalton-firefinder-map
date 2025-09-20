@@ -9,6 +9,7 @@ export interface RoomData {
   id: string;
   name: string;
   fireExtinguishers: FireExtinguisherData;
+  dateChecked?: string;
 }
 
 export interface FloorData {

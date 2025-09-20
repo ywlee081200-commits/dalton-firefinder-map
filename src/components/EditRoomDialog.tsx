@@ -18,7 +18,8 @@ export const EditRoomDialog = ({ roomId, room, onSave, onClose }: EditRoomDialog
     count: room?.fireExtinguishers?.count || 0,
     type: room?.fireExtinguishers?.type || "",
     capacity: room?.fireExtinguishers?.capacity || "",
-    maintenance: room?.fireExtinguishers?.maintenance || ""
+    maintenance: room?.fireExtinguishers?.maintenance || "",
+    dateChecked: new Date().toISOString().split('T')[0] // Today's date in YYYY-MM-DD format
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,7 +32,8 @@ export const EditRoomDialog = ({ roomId, room, onSave, onClose }: EditRoomDialog
         type: formData.type,
         capacity: formData.capacity,
         maintenance: formData.maintenance
-      }
+      },
+      dateChecked: formData.dateChecked
     });
   };
 
@@ -44,10 +46,10 @@ export const EditRoomDialog = ({ roomId, room, onSave, onClose }: EditRoomDialog
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-md bg-card/95 backdrop-blur-sm border-primary/20 shadow-2xl">
+      <Card className="w-full max-w-lg bg-card/95 backdrop-blur-sm border-primary/20 shadow-2xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-lg font-semibold">
-            Edit Room {roomId}
+          <CardTitle className="text-lg font-semibold flex items-center gap-2">
+            🧯 Fire Extinguisher Checklist - Room {roomId}
           </CardTitle>
           <Button
             variant="ghost"
@@ -59,9 +61,12 @@ export const EditRoomDialog = ({ roomId, room, onSave, onClose }: EditRoomDialog
           </Button>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="count">Number of Fire Extinguishers</Label>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="bg-emergency-bg p-4 rounded-lg space-y-4">
+              <h3 className="font-medium text-sm text-accent mb-3">Fire Extinguisher Information</h3>
+              
+              <div className="space-y-2">
+                <Label htmlFor="count" className="text-sm font-medium">Number of Fire Extinguishers *</Label>
               <Input
                 id="count"
                 type="number"
@@ -72,8 +77,8 @@ export const EditRoomDialog = ({ roomId, room, onSave, onClose }: EditRoomDialog
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="type">Type</Label>
+              <div className="space-y-2">
+                <Label htmlFor="type" className="text-sm font-medium">Type</Label>
               <Input
                 id="type"
                 value={formData.type}
@@ -83,8 +88,8 @@ export const EditRoomDialog = ({ roomId, room, onSave, onClose }: EditRoomDialog
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="capacity">Capacity</Label>
+              <div className="space-y-2">
+                <Label htmlFor="capacity" className="text-sm font-medium">Capacity</Label>
               <Input
                 id="capacity"
                 value={formData.capacity}
@@ -94,20 +99,33 @@ export const EditRoomDialog = ({ roomId, room, onSave, onClose }: EditRoomDialog
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="maintenance">Last Maintenance</Label>
-              <Input
-                id="maintenance"
-                value={formData.maintenance}
-                onChange={(e) => handleInputChange("maintenance", e.target.value)}
-                placeholder="e.g., 2024-01-15"
-                className="w-full"
-              />
+              <div className="space-y-2">
+                <Label htmlFor="maintenance" className="text-sm font-medium">Last Maintenance Date</Label>
+                <Input
+                  id="maintenance"
+                  type="date"
+                  value={formData.maintenance}
+                  onChange={(e) => handleInputChange("maintenance", e.target.value)}
+                  className="w-full"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="dateChecked" className="text-sm font-medium">Date Checked *</Label>
+                <Input
+                  id="dateChecked"
+                  type="date"
+                  value={formData.dateChecked}
+                  onChange={(e) => handleInputChange("dateChecked", e.target.value)}
+                  className="w-full"
+                  required
+                />
+              </div>
             </div>
 
             <div className="flex gap-2 pt-2">
-              <Button type="submit" className="flex-1">
-                Save
+              <Button type="submit" className="flex-1 bg-accent hover:bg-accent/90">
+                ✓ Save Checklist
               </Button>
               <Button type="button" variant="outline" onClick={onClose} className="flex-1">
                 Cancel
