@@ -45,8 +45,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       { id: "218", x: 30, y: 44, width: 12, height: 10 },
       
       // Facilities (aligned grid)
-      { id: "Bath", x: 30, y: 20, width: 12, height: 8 },
-      { id: "stairs", x: 30, y: 30, width: 12, height: 6 },
+      { id: "Bathroom", x: 30, y: 20, width: 12, height: 8 },
+      { id: "Stairs", x: 30, y: 30, width: 12, height: 6 },
       { id: "Office", x: 30, y: 38, width: 12, height: 5 },
       
       // Lab rooms (right side)
@@ -70,8 +70,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       { id: "118", x: 30, y: 44, width: 12, height: 10 },
       
       // Facilities (aligned grid)
-      { id: "Bath", x: 30, y: 20, width: 12, height: 8 },
-      { id: "stairs", x: 30, y: 30, width: 12, height: 6 },
+      { id: "Bathroom", x: 30, y: 20, width: 12, height: 8 },
+      { id: "Stairs", x: 30, y: 30, width: 12, height: 6 },
       { id: "Office", x: 30, y: 38, width: 12, height: 5 },
       
       // Kitchen (larger, right side)
@@ -94,8 +94,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       { id: "318", x: 30, y: 44, width: 12, height: 10 },
       
       // Facilities (aligned grid)
-      { id: "Bath", x: 30, y: 20, width: 12, height: 8 },
-      { id: "stairs", x: 30, y: 30, width: 12, height: 6 },
+      { id: "Bathroom", x: 30, y: 20, width: 12, height: 8 },
+      { id: "Stairs", x: 30, y: 30, width: 12, height: 6 },
       { id: "Office", x: 30, y: 38, width: 12, height: 5 },
       
       // Dalton Hall (top, spanning width)
@@ -116,8 +116,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       
       // Facilities (aligned grid)
       { id: "art room", x: 45, y: 20, width: 18, height: 12 },
-      { id: "Bath", x: 30, y: 20, width: 12, height: 8 },
-      { id: "stairs", x: 30, y: 30, width: 12, height: 6 },
+      { id: "Bathroom", x: 30, y: 20, width: 12, height: 8 },
+      { id: "Stairs", x: 30, y: 30, width: 12, height: 6 },
       
       // ROOF areas (top sections)
       { id: "ROOF", x: 15, y: 5, width: 30, height: 12 },
@@ -311,7 +311,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                       className={`absolute border-2 rounded transition-all duration-200 ${
                         isPositioningMode 
                           ? "border-accent bg-accent/20 cursor-move hover:bg-accent/30" 
-                          : "cursor-pointer border-primary/30 hover:border-primary hover:bg-primary/20 hover:scale-105"
+                          : "cursor-pointer border-primary bg-background/90 hover:border-primary hover:bg-primary/20 hover:scale-105"
                       } ${isDragging === room.id || isResizing?.roomId === room.id ? "ring-2 ring-accent ring-opacity-50" : ""}`}
                       style={{
                         left: `${room.x}%`,
