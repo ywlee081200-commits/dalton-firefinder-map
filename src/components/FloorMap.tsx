@@ -347,12 +347,12 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       </div>
 
       <main className="container mx-auto px-4 py-20 flex items-center justify-center min-h-screen">
-        <div className="w-full max-w-6xl relative">
+        <div className="w-full max-w-sm md:max-w-6xl relative">
           <div className="bg-card/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-primary/10 overflow-hidden relative">
             <div className="w-full relative">
-              {/* Clean gradient background for all floors */}
-              <div className="w-full h-[70vh] bg-gradient-to-br from-blue-50 to-blue-100 relative">
-                <div className="absolute top-4 left-4 text-2xl font-bold text-primary">
+              {/* Clean gradient background for all floors - Mobile portrait optimized */}
+              <div className="w-full h-[80vh] md:h-[70vh] bg-gradient-to-br from-blue-50 to-blue-100 relative">
+                <div className="absolute top-4 left-4 text-lg md:text-2xl font-bold text-primary">
                   {floor.toUpperCase()} FLOOR
                 </div>
               </div>
