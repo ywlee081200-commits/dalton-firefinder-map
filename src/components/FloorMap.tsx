@@ -31,9 +31,9 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   const [isDraggingUI, setIsDraggingUI] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [uiPositions, setUIPositions] = useState({
-    navigation: { x: 25, y: 90 },    // Bottom left
-    reportButton: { x: 50, y: 90 },  // Bottom center  
-    backButton: { x: 75, y: 90 }     // Bottom right
+    navigation: { x: 85, y: 5 },
+    reportButton: { x: 5, y: 85 },
+    backButton: { x: 50, y: 92 }
   });
 
   const floorImages = {
