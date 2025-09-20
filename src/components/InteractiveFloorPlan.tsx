@@ -24,65 +24,98 @@ export const InteractiveFloorPlan = ({
   const floorConfigs = {
     "2nd": {
       rooms: [
-        { id: "211", name: "211", x: 50, y: 300, width: 60, height: 80 },
-        { id: "212", name: "212", x: 50, y: 380, width: 60, height: 80 },
-        { id: "213", name: "213", x: 50, y: 460, width: 60, height: 80 },
-        { id: "214", name: "214", x: 50, y: 540, width: 60, height: 80 },
-        { id: "215", name: "215", x: 50, y: 620, width: 60, height: 80 },
-        { id: "216", name: "216", x: 150, y: 620, width: 60, height: 80 },
-        { id: "217", name: "217", x: 150, y: 540, width: 60, height: 80 },
-        { id: "218", name: "218", x: 150, y: 460, width: 60, height: 80 },
-        { id: "Lab1", name: "Lab1", x: 250, y: 250, width: 80, height: 60 },
-        { id: "Lab2", name: "Lab2", x: 250, y: 320, width: 80, height: 60 },
-        { id: "Dalton Hall", name: "Dalton Hall", x: 200, y: 50, width: 300, height: 180 },
-        { id: "Bath", name: "Bath", x: 150, y: 300, width: 50, height: 80 },
-        { id: "Office", name: "Office", x: 150, y: 380, width: 50, height: 80 }
+        // Left column - rooms 211-215
+        { id: "211", name: "211", x: 50, y: 250, width: 50, height: 60 },
+        { id: "212", name: "212", x: 50, y: 320, width: 50, height: 60 },
+        { id: "213", name: "213", x: 50, y: 390, width: 50, height: 60 },
+        { id: "214", name: "214", x: 50, y: 460, width: 50, height: 60 },
+        { id: "215", name: "215", x: 50, y: 530, width: 50, height: 60 },
+        
+        // Right column - rooms 216-218  
+        { id: "216", name: "216", x: 110, y: 530, width: 50, height: 60 },
+        { id: "217", name: "217", x: 110, y: 460, width: 50, height: 60 },
+        { id: "218", name: "218", x: 110, y: 390, width: 50, height: 60 },
+        
+        // Middle section
+        { id: "Bathroom", name: "Bathroom", x: 110, y: 250, width: 40, height: 50 },
+        { id: "Office", name: "Office", x: 110, y: 310, width: 40, height: 70 },
+        
+        // Lab rooms
+        { id: "Lab1", name: "Lab1", x: 170, y: 200, width: 60, height: 50 },
+        { id: "Lab2", name: "Lab2", x: 170, y: 260, width: 60, height: 50 },
+        
+        // Large Dalton Hall at top
+        { id: "Dalton Hall", name: "Dalton Hall", x: 160, y: 60, width: 280, height: 130 }
       ]
     },
     "1st": {
       rooms: [
-        { id: "111", name: "111", x: 50, y: 300, width: 60, height: 80 },
-        { id: "112", name: "112", x: 50, y: 380, width: 60, height: 80 },
-        { id: "113", name: "113", x: 50, y: 460, width: 60, height: 80 },
-        { id: "114", name: "114", x: 50, y: 540, width: 60, height: 80 },
-        { id: "115", name: "115", x: 50, y: 620, width: 60, height: 80 },
-        { id: "116", name: "116", x: 150, y: 620, width: 60, height: 80 },
-        { id: "117", name: "117", x: 150, y: 540, width: 60, height: 80 },
-        { id: "118", name: "118", x: 150, y: 460, width: 60, height: 80 },
-        { id: "Kitchen", name: "Kitchen", x: 250, y: 250, width: 100, height: 80 },
-        { id: "Dalton Hall", name: "Dalton Hall", x: 200, y: 50, width: 300, height: 180 },
-        { id: "Bath", name: "Bath", x: 150, y: 300, width: 50, height: 80 },
-        { id: "Office", name: "Office", x: 150, y: 380, width: 50, height: 80 }
+        // Left column - rooms 111-115
+        { id: "111", name: "111", x: 50, y: 250, width: 50, height: 60 },
+        { id: "112", name: "112", x: 50, y: 320, width: 50, height: 60 },
+        { id: "113", name: "113", x: 50, y: 390, width: 50, height: 60 },
+        { id: "114", name: "114", x: 50, y: 460, width: 50, height: 60 },
+        { id: "115", name: "115", x: 50, y: 530, width: 50, height: 60 },
+        
+        // Right column - rooms 116-118
+        { id: "116", name: "116", x: 110, y: 530, width: 50, height: 60 },
+        { id: "117", name: "117", x: 110, y: 460, width: 50, height: 60 },
+        { id: "118", name: "118", x: 110, y: 390, width: 50, height: 60 },
+        
+        // Middle section
+        { id: "Bathroom", name: "Bathroom", x: 110, y: 250, width: 40, height: 50 },
+        { id: "Office", name: "Office", x: 110, y: 310, width: 40, height: 70 },
+        
+        // Kitchen (replaces labs on 1st floor)
+        { id: "Kitchen", name: "Kitchen", x: 170, y: 220, width: 80, height: 80 },
+        
+        // Large Dalton Hall at top
+        { id: "Dalton Hall", name: "Dalton Hall", x: 160, y: 60, width: 280, height: 130 }
       ]
     },
     "3rd": {
       rooms: [
-        { id: "311", name: "311", x: 50, y: 300, width: 60, height: 80 },
-        { id: "312", name: "312", x: 50, y: 380, width: 60, height: 80 },
-        { id: "313", name: "313", x: 50, y: 460, width: 60, height: 80 },
-        { id: "314", name: "314", x: 50, y: 540, width: 60, height: 80 },
-        { id: "315", name: "315", x: 50, y: 620, width: 60, height: 80 },
-        { id: "316", name: "316", x: 150, y: 620, width: 60, height: 80 },
-        { id: "317", name: "317", x: 150, y: 540, width: 60, height: 80 },
-        { id: "318", name: "318", x: 150, y: 460, width: 60, height: 80 },
-        { id: "Dalton Hall", name: "Dalton Hall", x: 200, y: 50, width: 300, height: 180 },
-        { id: "Bath", name: "Bath", x: 150, y: 300, width: 50, height: 80 },
-        { id: "Office", name: "Office", x: 150, y: 380, width: 50, height: 80 }
+        // Left column - rooms 311-315
+        { id: "311", name: "311", x: 50, y: 250, width: 50, height: 60 },
+        { id: "312", name: "312", x: 50, y: 320, width: 50, height: 60 },
+        { id: "313", name: "313", x: 50, y: 390, width: 50, height: 60 },
+        { id: "314", name: "314", x: 50, y: 460, width: 50, height: 60 },
+        { id: "315", name: "315", x: 50, y: 530, width: 50, height: 60 },
+        
+        // Right column - rooms 316-318
+        { id: "316", name: "316", x: 110, y: 530, width: 50, height: 60 },
+        { id: "317", name: "317", x: 110, y: 460, width: 50, height: 60 },
+        { id: "318", name: "318", x: 110, y: 390, width: 50, height: 60 },
+        
+        // Middle section
+        { id: "Bathroom", name: "Bathroom", x: 110, y: 250, width: 40, height: 50 },
+        { id: "Office", name: "Office", x: 110, y: 310, width: 40, height: 70 },
+        
+        // Large Dalton Hall at top
+        { id: "Dalton Hall", name: "Dalton Hall", x: 160, y: 60, width: 280, height: 130 }
       ]
     },
     "4th": {
       rooms: [
-        { id: "411", name: "411", x: 50, y: 300, width: 60, height: 80 },
-        { id: "412", name: "412", x: 50, y: 380, width: 60, height: 80 },
-        { id: "413", name: "413", x: 50, y: 460, width: 60, height: 80 },
-        { id: "414", name: "414", x: 50, y: 540, width: 60, height: 80 },
-        { id: "415", name: "415", x: 50, y: 620, width: 60, height: 80 },
-        { id: "416", name: "416", x: 150, y: 620, width: 60, height: 80 },
-        { id: "417", name: "417", x: 150, y: 540, width: 60, height: 80 },
-        { id: "418", name: "418", x: 150, y: 460, width: 60, height: 80 },
-        { id: "ROOF", name: "ROOF", x: 200, y: 50, width: 300, height: 180 },
-        { id: "Bath", name: "Bath", x: 150, y: 300, width: 50, height: 80 },
-        { id: "Office", name: "Office", x: 150, y: 380, width: 50, height: 80 }
+        // Left column - rooms 411-415
+        { id: "411", name: "411", x: 50, y: 300, width: 50, height: 60 },
+        { id: "412", name: "412", x: 50, y: 370, width: 50, height: 60 },
+        { id: "413", name: "413", x: 50, y: 440, width: 50, height: 60 },
+        { id: "414", name: "414", x: 50, y: 510, width: 50, height: 60 },
+        { id: "415", name: "415", x: 50, y: 580, width: 50, height: 60 },
+        
+        // Right column - rooms 416-418
+        { id: "416", name: "416", x: 110, y: 580, width: 50, height: 60 },
+        { id: "417", name: "417", x: 110, y: 510, width: 50, height: 60 },
+        { id: "418", name: "418", x: 110, y: 440, width: 50, height: 60 },
+        
+        // Art room and bathroom
+        { id: "art room", name: "Art Room", x: 110, y: 370, width: 50, height: 60 },
+        { id: "Bathroom", name: "Bathroom", x: 110, y: 300, width: 40, height: 60 },
+        
+        // Large ROOF areas at top
+        { id: "ROOF", name: "ROOF", x: 160, y: 60, width: 280, height: 130 },
+        { id: "ROOF2", name: "ROOF", x: 160, y: 200, width: 120, height: 80 }
       ]
     }
   };
@@ -124,29 +157,29 @@ export const InteractiveFloorPlan = ({
     });
     canvas.add(floorNumber);
 
-    // Draw decorative staircase (simplified)
+    // Draw decorative staircase pattern (matching original design)
     const staircase = new Rect({
-      left: 600,
-      top: 400,
-      width: 150,
-      height: 300,
-      fill: "linear-gradient(45deg, #f59e0b, #d97706)",
-      rx: 10,
-      ry: 10
+      left: 500,
+      top: 300,
+      width: 180,
+      height: 400,
+      fill: "linear-gradient(45deg, #f59e0b, #d97706, #92400e)",
+      rx: 15,
+      ry: 15
     });
     canvas.add(staircase);
 
-    // Draw main building outline
+    // Draw main building outline (matching proportions)
     const buildingOutline = new Rect({
       left: 40,
       top: 40,
-      width: 520,
-      height: 720,
+      width: 450,
+      height: 650,
       fill: "transparent",
       stroke: "#374151",
       strokeWidth: 3,
-      rx: 5,
-      ry: 5
+      rx: 8,
+      ry: 8
     });
     canvas.add(buildingOutline);
 
