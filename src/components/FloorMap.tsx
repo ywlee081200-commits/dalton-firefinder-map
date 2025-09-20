@@ -198,7 +198,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     if (count === 0) return null;
     
     return (
-      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 flex items-center gap-0.5 pointer-events-none">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-3 flex items-center gap-0.5 pointer-events-none">
         {Array.from({ length: Math.min(count, 6) }, (_, i) => (
           <div 
             key={i} 
