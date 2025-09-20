@@ -346,14 +346,18 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
         )}
       </div>
 
-      <main className="container mx-auto px-4 py-20 flex items-center justify-center min-h-screen">
-        <div className="w-full max-w-sm md:max-w-6xl relative">
-          <div className="bg-card/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-primary/10 overflow-hidden relative">
+      <main className="container mx-auto px-2 md:px-4 py-10 md:py-20 flex items-center justify-center min-h-screen">
+        <div className="w-full max-w-xs sm:max-w-sm md:max-w-6xl relative">
+          <div className="bg-card/90 backdrop-blur-sm rounded-xl md:rounded-2xl shadow-2xl border border-primary/10 overflow-hidden relative">
             <div className="w-full relative">
               {/* Clean gradient background for all floors - Mobile portrait optimized */}
-              <div className="w-full h-[80vh] md:h-[70vh] bg-gradient-to-br from-blue-50 to-blue-100 relative">
-                <div className="absolute top-4 left-4 text-lg md:text-2xl font-bold text-primary">
+              <div className="w-full h-[85vh] sm:h-[80vh] md:h-[70vh] bg-gradient-to-br from-blue-50 to-blue-100 relative">
+                <div className="absolute top-2 left-2 md:top-4 md:left-4 text-base sm:text-lg md:text-2xl font-bold text-primary">
                   {floor.toUpperCase()} FLOOR
+                </div>
+                {/* Mobile layout indicator */}
+                <div className="absolute top-2 right-2 md:hidden bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">
+                  📱 MOBILE
                 </div>
               </div>
               
