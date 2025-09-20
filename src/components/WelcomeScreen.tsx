@@ -1,5 +1,6 @@
 import { Navigation } from "./Navigation";
 import { ReportButton } from "./ReportButton";
+import daltonEntrance from "@/assets/dalton-entrance.jpg";
 
 interface WelcomeScreenProps {
   onFloorSelect: (floor: string) => void;
@@ -7,11 +8,17 @@ interface WelcomeScreenProps {
 
 export const WelcomeScreen = ({ onFloorSelect }: WelcomeScreenProps) => {
   return (
-    <div className="min-h-screen safety-gradient relative overflow-hidden">
-      <Navigation onFloorSelect={onFloorSelect} />
-      <ReportButton />
-      
-      <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-screen">
+    <div className="min-h-screen relative overflow-hidden">
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${daltonEntrance})` }}
+      />
+      <div className="absolute inset-0 bg-black/40" />
+      <div className="relative z-10">
+        <Navigation onFloorSelect={onFloorSelect} />
+        <ReportButton />
+        
+        <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-screen">
         <div className="max-w-4xl w-full text-center">
           <div className="bg-card/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-primary/10 p-12">
             <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
@@ -35,7 +42,8 @@ export const WelcomeScreen = ({ onFloorSelect }: WelcomeScreenProps) => {
             </div>
           </div>
         </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };
