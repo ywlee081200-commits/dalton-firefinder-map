@@ -277,7 +277,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     <div className="min-h-screen safety-gradient relative overflow-hidden">
       {/* Navigation - movable */}
       <div 
-        className={`absolute z-50 ${isPositioningMode ? 'cursor-move' : ''}`}
+        className={`absolute z-50 ${isPositioningMode ? 'cursor-move border-2 border-accent/50 rounded p-1' : ''}`}
         style={{ 
           left: `${uiPositions.navigation.x}%`, 
           top: `${uiPositions.navigation.y}%`,
@@ -287,15 +287,15 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       >
         <Navigation onFloorSelect={onFloorSelect} currentFloor={floor} />
         {isPositioningMode && (
-          <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs bg-black/60 text-white px-2 py-1 rounded whitespace-nowrap">
-            Navigation
+          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs bg-accent text-accent-foreground px-2 py-1 rounded whitespace-nowrap">
+            📐 Drag Navigation
           </div>
         )}
       </div>
       
       {/* Report Button - movable */}
       <div 
-        className={`absolute z-50 ${isPositioningMode ? 'cursor-move' : ''}`}
+        className={`absolute z-50 ${isPositioningMode ? 'cursor-move border-2 border-accent/50 rounded p-1' : ''}`}
         style={{ 
           left: `${uiPositions.reportButton.x}%`, 
           top: `${uiPositions.reportButton.y}%`,
@@ -305,8 +305,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       >
         <ReportButton />
         {isPositioningMode && (
-          <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs bg-black/60 text-white px-2 py-1 rounded whitespace-nowrap">
-            Report Button
+          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs bg-accent text-accent-foreground px-2 py-1 rounded whitespace-nowrap">
+            📐 Drag Report
           </div>
         )}
       </div>
@@ -321,7 +321,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
               : "bg-muted text-muted-foreground hover:bg-muted/80"
           }`}
         >
-          {isPositioningMode ? "🔒 Exit Positioning" : "📐 Position Rooms"}
+          {isPositioningMode ? "🔒 Exit Positioning" : "📐 Position Mode"}
         </button>
         
         {isPositioningMode && (
@@ -334,7 +334,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
             </button>
             <div className="text-xs text-white bg-black/60 p-2 rounded max-w-48">
               <div>• Drag rooms to move</div>
-              <div>• Drag corners to resize</div>
+              <div>• Drag UI elements to reposition</div>
+              <div>• Drag corners to resize rooms</div>
             </div>
           </div>
         )}
@@ -435,7 +436,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
 
           {/* Back to Main Map Button - movable */}
           <div 
-            className={`absolute z-50 ${isPositioningMode ? 'cursor-move' : ''}`}
+            className={`absolute z-50 ${isPositioningMode ? 'cursor-move border-2 border-accent/50 rounded p-1' : ''}`}
             style={{ 
               left: `${uiPositions.backButton.x}%`, 
               top: `${uiPositions.backButton.y}%`,
@@ -451,8 +452,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
               ← Back to Main Map
             </Button>
             {isPositioningMode && (
-              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs bg-black/60 text-white px-2 py-1 rounded whitespace-nowrap">
-                Back Button
+              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs bg-accent text-accent-foreground px-2 py-1 rounded whitespace-nowrap">
+                📐 Drag Back Button
               </div>
             )}
           </div>
