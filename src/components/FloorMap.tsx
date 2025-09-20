@@ -25,6 +25,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [popoverRoomId, setPopoverRoomId] = useState<string | null>(null);
   const [isPositioningMode, setIsPositioningMode] = useState(false);
+  const [isDevMode, setIsDevMode] = useState(true); // Set to false for published version
   const [isDragging, setIsDragging] = useState<string | null>(null);
   const [isResizing, setIsResizing] = useState<{ roomId: string; handle: string } | null>(null);
   const [isDraggingUI, setIsDraggingUI] = useState<string | null>(null);
@@ -318,16 +319,31 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       
       {/* Positioning Mode Controls */}
       <div className="absolute top-4 left-4 z-50 space-y-2">
+        {/* Dev Mode Toggle - Only show in dev environment */}
         <button
-          onClick={() => setIsPositioningMode(!isPositioningMode)}
-          className={`px-4 py-2 text-sm rounded-lg font-medium transition-all duration-300 ${
-            isPositioningMode 
-              ? "bg-accent text-accent-foreground shadow-lg" 
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
+          onClick={() => setIsDevMode(!isDevMode)}
+          className={`px-3 py-1 rounded text-xs font-medium transition-all duration-200 ${
+            isDevMode 
+              ? "bg-green-500 text-white hover:bg-green-600" 
+              : "bg-gray-500 text-white hover:bg-gray-600"
           }`}
         >
-          {isPositioningMode ? "🔒 Exit Positioning" : "📐 Position Mode"}
+          {isDevMode ? "🛠️ DEV MODE" : "👁️ VIEW MODE"}
         </button>
+
+        {/* Development Mode Toggle */}
+        {isDevMode && (
+          <button
+            onClick={() => setIsPositioningMode(!isPositioningMode)}
+            className={`px-4 py-2 text-sm rounded-lg font-medium transition-all duration-300 ${
+              isPositioningMode 
+                ? "bg-accent text-accent-foreground shadow-lg" 
+                : "bg-muted text-muted-foreground hover:bg-muted/80"
+            }`}
+          >
+            {isPositioningMode ? "🔒 Exit Positioning" : "📐 Position Mode"}
+          </button>
+        )}
         
         {isPositioningMode && (
           <div className="space-y-1">
@@ -469,32 +485,40 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                                 {roomsData[room.id].fireExtinguishers.maintenance && (
                                   <div><strong>Last Maintenance:</strong> {roomsData[room.id].fireExtinguishers.maintenance}</div>
                                 )}
-                                <Button 
-                                  onClick={() => {
-                                    setEditingRoom(room.id);
-                                    setPopoverOpen(false);
-                                    setPopoverRoomId(null);
-                                  }}
-                                  className="w-full mt-3"
-                                  size="sm"
-                                >
-                                  Edit Room Info
-                                </Button>
+                                {isDevMode && (
+                                  <Button 
+                                    onClick={() => {
+                                      setEditingRoom(room.id);
+                                      setPopoverOpen(false);
+                                      setPopoverRoomId(null);
+                                    }}
+                                    className="w-full mt-3"
+                                    size="sm"
+                                  >
+                                    Edit Room Info
+                                  </Button>
+                                )}
                               </div>
                             ) : (
-                              <div className="text-center">
-                                <p className="text-muted-foreground mb-3">No information available for this room.</p>
-                                <Button 
-                                  onClick={() => {
-                                    setEditingRoom(room.id);
-                                    setPopoverOpen(false);
-                                    setPopoverRoomId(null);
-                                  }}
-                                  size="sm"
-                                >
-                                  Add Room Info
-                                </Button>
-                              </div>
+                              isDevMode ? (
+                                <div className="text-center">
+                                  <p className="text-muted-foreground mb-3">No information available for this room.</p>
+                                  <Button 
+                                    onClick={() => {
+                                      setEditingRoom(room.id);
+                                      setPopoverOpen(false);
+                                      setPopoverRoomId(null);
+                                    }}
+                                    size="sm"
+                                  >
+                                    Add Room Info
+                                  </Button>
+                                </div>
+                              ) : (
+                                <div className="text-center">
+                                  <p className="text-muted-foreground">No safety information available for this room.</p>
+                                </div>
+                              )
                             )}
                           </CardContent>
                         </Card>
@@ -540,8 +564,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
         />
       )}
 
-      {/* Edit Room Dialog */}
-      {editingRoom && (
+      {/* Edit Room Dialog - Only show in dev mode */}
+      {isDevMode && editingRoom && (
         <EditRoomDialog
           roomId={editingRoom}
           room={roomsData[editingRoom]}
