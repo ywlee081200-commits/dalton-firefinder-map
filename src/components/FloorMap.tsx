@@ -32,20 +32,29 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
 
   const [roomPositions, setRoomPositions] = useState({
     "2nd": [
-      { id: "211", x: 31.029410358943792, y: 51.046927379108, width: 10, height: 8 },
-      { id: "212", x: 31.205880940843258, y: 59.61490112241428, width: 10, height: 8 },
-      { id: "213", x: 30.05882215849673, y: 73.84119236442498, width: 9.85294100223529, height: 5.243738124028326 },
-      { id: "214", x: 29.794116285647533, y: 79.9216898596746, width: 10.294117456983955, height: 6.211089998272584 },
-      { id: "215", x: 30.05882215849673, y: 86.96953922916848, width: 10.029411584134756, height: 5.243738124028326 },
-      { id: "216", x: 42.32352760050955, y: 86.55495985449235, width: 9.499999838436352, height: 6.072896873380543 },
-      { id: "217", x: 42.32352760050955, y: 79.9216898596746, width: 9.588235129386092, height: 5.381931248920367 },
-      { id: "218", x: 41.79411585481116, y: 73.56480611464092, width: 9.85294100223529, height: 4.967351874244258 },
-      { id: "Bath", x: 42.352939400062496, y: 53.112223630619496, width: 5, height: 6.45482812230091 },
-      { id: "stairs", x: 42.352939400062496, y: 59.68019737392576, width: 8, height: 4 },
-      { id: "Office", x: 42.352939400062496, y: 63.75309424730632, width: 6.735294019441703, height: 8.304111245465535 },
-      { id: "Lab1", x: 40.23529230955982, y: 37.634593642711394, width: 7.794117618547588, height: 5.987476248056659 },
-      { id: "Lab2", x: 40.67646876430848, y: 44.54424988731323, width: 7.176470581899466, height: 6.402055622732767 },
-      { id: "Dalton Hall", x: 33.20588104855236, y: 7.370299291355373, width: 17.73529348089623, height: 28.882363102435654 }
+      // Left column - rooms 211-215 (beautifully aligned)
+      { id: "211", x: 15, y: 20, width: 12, height: 10 },
+      { id: "212", x: 15, y: 32, width: 12, height: 10 },
+      { id: "213", x: 15, y: 44, width: 12, height: 10 },
+      { id: "214", x: 15, y: 56, width: 12, height: 10 },
+      { id: "215", x: 15, y: 68, width: 12, height: 10 },
+      
+      // Middle column - rooms 216-218 (aligned with left column)
+      { id: "216", x: 30, y: 68, width: 12, height: 10 },
+      { id: "217", x: 30, y: 56, width: 12, height: 10 },
+      { id: "218", x: 30, y: 44, width: 12, height: 10 },
+      
+      // Facilities (aligned grid)
+      { id: "Bath", x: 30, y: 20, width: 12, height: 8 },
+      { id: "stairs", x: 30, y: 30, width: 12, height: 6 },
+      { id: "Office", x: 30, y: 38, width: 12, height: 5 },
+      
+      // Lab rooms (right side)
+      { id: "Lab1", x: 45, y: 20, width: 18, height: 12 },
+      { id: "Lab2", x: 45, y: 34, width: 18, height: 12 },
+      
+      // Dalton Hall (top, spanning width)
+      { id: "Dalton Hall", x: 15, y: 5, width: 50, height: 12 }
     ],
     "1st": [
       // Left column - rooms 111-115 (beautifully aligned)
@@ -72,33 +81,47 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       { id: "Dalton Hall", x: 15, y: 5, width: 50, height: 12 }
     ],
     "3rd": [
-      { id: "311", x: 31.029410358943792, y: 51.046927379108, width: 10, height: 8 },
-      { id: "312", x: 31.205880940843258, y: 59.61490112241428, width: 10, height: 8 },
-      { id: "313", x: 30.05882215849673, y: 73.84119236442498, width: 9.85294100223529, height: 5.243738124028326 },
-      { id: "314", x: 29.794116285647533, y: 79.9216898596746, width: 10.294117456983955, height: 6.211089998272584 },
-      { id: "315", x: 30.05882215849673, y: 86.96953922916848, width: 10.029411584134756, height: 5.243738124028326 },
-      { id: "316", x: 42.32352760050955, y: 86.55495985449235, width: 9.499999838436352, height: 6.072896873380543 },
-      { id: "317", x: 42.32352760050955, y: 79.9216898596746, width: 9.588235129386092, height: 5.381931248920367 },
-      { id: "318", x: 41.79411585481116, y: 73.56480611464092, width: 9.85294100223529, height: 4.967351874244258 },
-      { id: "Bath", x: 42.352939400062496, y: 53.112223630619496, width: 5, height: 6.45482812230091 },
-      { id: "stairs", x: 42.352939400062496, y: 59.68019737392576, width: 8, height: 4 },
-      { id: "Office", x: 42.352939400062496, y: 63.75309424730632, width: 6.735294019441703, height: 8.304111245465535 },
-      { id: "Dalton Hall", x: 33.20588104855236, y: 7.370299291355373, width: 17.73529348089623, height: 28.882363102435654 }
+      // Left column - rooms 311-315 (beautifully aligned)
+      { id: "311", x: 15, y: 20, width: 12, height: 10 },
+      { id: "312", x: 15, y: 32, width: 12, height: 10 },
+      { id: "313", x: 15, y: 44, width: 12, height: 10 },
+      { id: "314", x: 15, y: 56, width: 12, height: 10 },
+      { id: "315", x: 15, y: 68, width: 12, height: 10 },
+      
+      // Middle column - rooms 316-318 (aligned with left column)
+      { id: "316", x: 30, y: 68, width: 12, height: 10 },
+      { id: "317", x: 30, y: 56, width: 12, height: 10 },
+      { id: "318", x: 30, y: 44, width: 12, height: 10 },
+      
+      // Facilities (aligned grid)
+      { id: "Bath", x: 30, y: 20, width: 12, height: 8 },
+      { id: "stairs", x: 30, y: 30, width: 12, height: 6 },
+      { id: "Office", x: 30, y: 38, width: 12, height: 5 },
+      
+      // Dalton Hall (top, spanning width)
+      { id: "Dalton Hall", x: 15, y: 5, width: 50, height: 12 }
     ],
     "4th": [
-      { id: "411", x: 31.029410358943792, y: 51.046927379108, width: 10, height: 8 },
-      { id: "412", x: 31.205880940843258, y: 59.61490112241428, width: 10, height: 8 },
-      { id: "413", x: 30.05882215849673, y: 73.84119236442498, width: 9.85294100223529, height: 5.243738124028326 },
-      { id: "414", x: 29.794116285647533, y: 79.9216898596746, width: 10.294117456983955, height: 6.211089998272584 },
-      { id: "415", x: 30.05882215849673, y: 86.96953922916848, width: 10.029411584134756, height: 5.243738124028326 },
-      { id: "416", x: 42.32352760050955, y: 86.55495985449235, width: 9.499999838436352, height: 6.072896873380543 },
-      { id: "417", x: 42.32352760050955, y: 79.9216898596746, width: 9.588235129386092, height: 5.381931248920367 },
-      { id: "418", x: 41.79411585481116, y: 73.56480611464092, width: 9.85294100223529, height: 4.967351874244258 },
-      { id: "art room", x: 40.23529230955982, y: 37.634593642711394, width: 10, height: 8 },
-      { id: "Bath", x: 42.352939400062496, y: 53.112223630619496, width: 5, height: 6.45482812230091 },
-      { id: "stairs", x: 42.352939400062496, y: 59.68019737392576, width: 8, height: 4 },
-      { id: "ROOF", x: 33.20588104855236, y: 7.370299291355373, width: 17.73529348089623, height: 18 },
-      { id: "ROOF2", x: 33.20588104855236, y: 26.370299291355373, width: 12, height: 10 }
+      // Left column - rooms 411-415 (beautifully aligned)
+      { id: "411", x: 15, y: 20, width: 12, height: 10 },
+      { id: "412", x: 15, y: 32, width: 12, height: 10 },
+      { id: "413", x: 15, y: 44, width: 12, height: 10 },
+      { id: "414", x: 15, y: 56, width: 12, height: 10 },
+      { id: "415", x: 15, y: 68, width: 12, height: 10 },
+      
+      // Middle column - rooms 416-418 (aligned with left column)
+      { id: "416", x: 30, y: 68, width: 12, height: 10 },
+      { id: "417", x: 30, y: 56, width: 12, height: 10 },
+      { id: "418", x: 30, y: 44, width: 12, height: 10 },
+      
+      // Facilities (aligned grid)
+      { id: "art room", x: 45, y: 20, width: 18, height: 12 },
+      { id: "Bath", x: 30, y: 20, width: 12, height: 8 },
+      { id: "stairs", x: 30, y: 30, width: 12, height: 6 },
+      
+      // ROOF areas (top sections)
+      { id: "ROOF", x: 15, y: 5, width: 30, height: 12 },
+      { id: "ROOF2", x: 47, y: 5, width: 18, height: 12 }
     ]
   });
 
@@ -264,28 +287,12 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
         <div className="w-full max-w-6xl relative">
           <div className="bg-card/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-primary/10 overflow-hidden relative">
             <div className="w-full relative">
-              {/* Conditional background - only show image for floors other than 1st */}
-              {floor !== "1st" && (
-                <img 
-                  src={floorImages[floor]}
-                  alt={`${floor} Floor Plan`}
-                  className="w-full h-auto object-contain max-h-[85vh] select-none"
-                  style={{ 
-                    imageRendering: 'crisp-edges'
-                  }}
-                  loading="eager"
-                  decoding="sync"
-                />
-              )}
-              
-              {/* Clean background for 1st floor */}
-              {floor === "1st" && (
-                <div className="w-full h-[70vh] bg-gradient-to-br from-blue-50 to-blue-100 relative">
-                  <div className="absolute top-4 left-4 text-2xl font-bold text-primary">
-                    {floor.toUpperCase()} FLOOR
-                  </div>
+              {/* Clean gradient background for all floors */}
+              <div className="w-full h-[70vh] bg-gradient-to-br from-blue-50 to-blue-100 relative">
+                <div className="absolute top-4 left-4 text-2xl font-bold text-primary">
+                  {floor.toUpperCase()} FLOOR
                 </div>
-              )}
+              </div>
               
               {/* Clickable room overlays */}
               <div 
