@@ -3,12 +3,8 @@ import { Navigation } from "./Navigation";
 import { ReportButton } from "./ReportButton";
 import { RoomInfoPanel } from "./RoomInfoPanel";
 import { EditRoomDialog } from "./EditRoomDialog";
-import { FireExtinguisherIcon } from "./FireExtinguisherIcon";
+import { InteractiveFloorPlan } from "./InteractiveFloorPlan";
 import { FloorNumber, RoomData } from "@/types/SafetyMap";
-import floor1Image from "@/assets/1.jpg";
-import floor2Image from "@/assets/2.jpg";
-import floor3Image from "@/assets/3.jpg";
-import floor4Image from "@/assets/4.jpg";
 
 interface FloorMapProps {
   floor: FloorNumber;
@@ -21,13 +17,6 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   const [editingRoom, setEditingRoom] = useState<string | null>(null);
   const [roomsData, setRoomsData] = useState<Record<string, RoomData>>({});
   const [isDevMode, setIsDevMode] = useState(false);
-
-  const floorImages = {
-    "1st": floor1Image,
-    "2nd": floor2Image,
-    "3rd": floor3Image,
-    "4th": floor4Image
-  };
 
   const floorRooms = {
     "1st": ["111", "112", "113", "114", "115", "116", "117", "118", "Dalton Hall", "Kitchen", "Bath", "Office"],
@@ -58,11 +47,9 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     return (
       <div className="absolute -top-2 -right-2 flex flex-wrap gap-1 pointer-events-none">
         {Array.from({ length: Math.min(count, 4) }, (_, i) => (
-          <FireExtinguisherIcon 
-            key={i} 
-            size="sm" 
-            className="text-accent drop-shadow-lg"
-          />
+          <div key={i} className="w-4 h-4 bg-accent rounded-full text-accent-foreground text-xs flex items-center justify-center">
+            🧯
+          </div>
         ))}
         {count > 4 && (
           <span className="text-xs bg-accent text-accent-foreground rounded-full px-1 font-bold">
@@ -93,56 +80,13 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       </div>
 
       <main className="container mx-auto px-4 py-20 flex items-center justify-center min-h-screen">
-        <div className="w-full max-w-5xl relative">
-          <div className="bg-card/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-primary/10 overflow-hidden relative">
-            <div className="w-full relative">
-              <img 
-                src={floorImages[floor]}
-                alt={`${floor} Floor Plan`}
-                className="w-full h-auto object-contain max-h-[85vh] select-none"
-                style={{ 
-                  imageRendering: 'crisp-edges'
-                }}
-                loading="eager"
-                decoding="sync"
-              />
-              
-              {/* Clickable room overlays */}
-              <div className="absolute inset-0">
-                {floorRooms[floor].map((roomId) => {
-                  const roomData = roomsData[roomId];
-                  const extinguisherCount = roomData?.fireExtinguishers?.count || 0;
-                  
-                  return (
-                    <div
-                      key={roomId}
-                      className={`absolute room-interactive border-2 border-transparent hover:border-primary/50 rounded ${
-                        selectedRoom === roomId ? "bg-primary/20 border-primary" : ""
-                      } ${isDevMode ? "bg-accent/10" : ""}`}
-                      style={{
-                        // Position will need to be customized based on actual room locations
-                        // For now, using placeholder positions
-                        left: `${20 + (floorRooms[floor].indexOf(roomId) % 4) * 20}%`,
-                        top: `${20 + Math.floor(floorRooms[floor].indexOf(roomId) / 4) * 15}%`,
-                        width: "8%",
-                        height: "10%"
-                      }}
-                      onClick={() => handleRoomClick(roomId)}
-                      title={`${roomId}${roomData ? ` - ${extinguisherCount} extinguisher(s)` : ""}`}
-                    >
-                      {renderFireExtinguishers(roomId, extinguisherCount)}
-                      
-                      {isDevMode && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white text-xs font-bold rounded">
-                          {roomId}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+        <div className="w-full max-w-6xl relative">
+          <InteractiveFloorPlan
+            floor={floor}
+            roomsData={roomsData}
+            onRoomClick={handleRoomClick}
+            isDevMode={isDevMode}
+          />
 
           <div className="mt-6 text-center">
             <button
@@ -155,13 +99,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
         </div>
       </main>
 
-      {/* Room Info Panel */}
-      {selectedRoom && roomsData[selectedRoom] && (
-        <RoomInfoPanel
-          room={roomsData[selectedRoom]}
-          onClose={() => setSelectedRoom(null)}
-        />
-      )}
+      {/* Room Info Panel - now handled by InteractiveFloorPlan */}
 
       {/* Edit Room Dialog */}
       {editingRoom && (
