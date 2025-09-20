@@ -230,18 +230,18 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     if (count === 0) return null;
     
     return (
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-8 flex items-center gap-0.5 pointer-events-none">
+      <div className="flex items-center gap-0.5 ml-2">
         {Array.from({ length: Math.min(count, 6) }, (_, i) => (
           <div 
             key={i} 
             className="text-accent drop-shadow-lg"
-            style={{ fontSize: '14px', lineHeight: '1' }}
+            style={{ fontSize: '12px', lineHeight: '1' }}
           >
             🧯
           </div>
         ))}
         {count > 6 && (
-          <div className="text-[10px] bg-accent text-accent-foreground rounded-full px-1 font-bold ml-1">
+          <div className="text-[8px] bg-accent text-accent-foreground rounded-full px-1 font-bold ml-1">
             +{count - 6}
           </div>
         )}
@@ -322,16 +322,17 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                       onClick={() => handleRoomClick(room.id)}
                       onMouseDown={(e) => handleMouseDown(e, room.id, 'move')}
                     >
-                      {renderFireExtinguishers(room.id, extinguisherCount)}
-                      
-                      {/* Room label - replaces original image text */}
+                      {/* Room label with fire extinguishers - replaces original image text */}
                       <div className={`absolute inset-0 flex items-center justify-center text-sm font-bold transition-opacity duration-200 ${
                         isPositioningMode 
                           ? "bg-accent/60 text-white" 
                           : "text-black"
                       }`}>
                         <div className="text-center pointer-events-none">
-                          <div className="bg-white px-2 py-1 rounded shadow-sm border border-gray-200">{room.id}</div>
+                          <div className="bg-white px-2 py-1 rounded shadow-sm border border-gray-200 flex items-center">
+                            {room.id}
+                            {renderFireExtinguishers(room.id, extinguisherCount)}
+                          </div>
                           {isPositioningMode && (
                             <div className="text-[10px] mt-1 bg-black/60 text-white px-1 rounded">
                               {Math.round(room.x)},{Math.round(room.y)} | {Math.round(room.width)}×{Math.round(room.height)}
