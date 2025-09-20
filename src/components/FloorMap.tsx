@@ -92,14 +92,14 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
         </button>
       </div>
 
-      <main className="container mx-auto px-4 py-8 flex items-center justify-center min-h-screen">
-        <div className="max-w-4xl w-full relative">
+      <main className="container mx-auto px-4 py-20 flex items-center justify-center min-h-screen">
+        <div className="w-full max-w-5xl relative">
           <div className="bg-card/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-primary/10 overflow-hidden relative">
-            <div className="aspect-[4/3] w-full relative">
+            <div className="w-full relative">
               <img 
                 src={floorImages[floor]}
                 alt={`${floor} Floor Plan`}
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-contain max-h-[80vh]"
               />
               
               {/* Clickable room overlays */}
