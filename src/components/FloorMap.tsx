@@ -99,7 +99,12 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
               <img 
                 src={floorImages[floor]}
                 alt={`${floor} Floor Plan`}
-                className="w-full h-auto object-contain max-h-[80vh]"
+                className="w-full h-auto object-contain max-h-[85vh] select-none"
+                style={{ 
+                  imageRendering: 'crisp-edges'
+                }}
+                loading="eager"
+                decoding="sync"
               />
               
               {/* Clickable room overlays */}
