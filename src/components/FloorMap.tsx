@@ -4,6 +4,8 @@ import { ReportButton } from "./ReportButton";
 import { RoomInfoPanel } from "./RoomInfoPanel";
 import { EditRoomDialog } from "./EditRoomDialog";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FloorNumber, RoomData } from "@/types/SafetyMap";
 import floor1Image from "@/assets/1.jpg";
 import floor2Image from "@/assets/2.jpg";
@@ -20,6 +22,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
   const [editingRoom, setEditingRoom] = useState<string | null>(null);
   const [roomsData, setRoomsData] = useState<Record<string, RoomData>>({});
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [popoverRoomId, setPopoverRoomId] = useState<string | null>(null);
   const [isPositioningMode, setIsPositioningMode] = useState(false);
   const [isDragging, setIsDragging] = useState<string | null>(null);
   const [isResizing, setIsResizing] = useState<{ roomId: string; handle: string } | null>(null);
@@ -136,7 +140,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
 
   const handleRoomClick = (roomId: string) => {
     if (isPositioningMode) return;
-    setEditingRoom(roomId);
+    setPopoverRoomId(roomId);
+    setPopoverOpen(true);
     setSelectedRoom(null);
   };
 
@@ -364,74 +369,137 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                   const extinguisherCount = roomData?.fireExtinguishers?.count || 0;
                   
                   return (
-                    <div
+                    <Popover 
                       key={room.id}
-                      className={`absolute border-2 rounded transition-all duration-200 ${
-                        isPositioningMode 
-                          ? "border-accent bg-accent/20 cursor-move hover:bg-accent/30" 
-                          : "cursor-pointer border-primary bg-background/90 hover:border-primary hover:bg-primary/20 hover:scale-105"
-                      } ${isDragging === room.id || isResizing?.roomId === room.id ? "ring-2 ring-accent ring-opacity-50" : ""}`}
-                      style={{
-                        left: `${room.x}%`,
-                        top: `${room.y}%`,
-                        width: `${room.width}%`,
-                        height: `${room.height}%`
+                      open={popoverOpen && popoverRoomId === room.id} 
+                      onOpenChange={(open) => {
+                        if (!open) {
+                          setPopoverOpen(false);
+                          setPopoverRoomId(null);
+                        }
                       }}
-                      onClick={() => handleRoomClick(room.id)}
-                      onMouseDown={(e) => handleMouseDown(e, room.id, 'move')}
                     >
-                      {/* Room label with fire extinguishers - replaces original image text */}
-                      <div className={`absolute inset-0 flex items-center justify-center text-sm font-bold transition-opacity duration-200 ${
-                        isPositioningMode 
-                          ? "bg-accent/60 text-white" 
-                          : "text-black"
-                      }`}>
-                        <div className="text-center pointer-events-none">
-                          <div className="flex items-center justify-center">
-                            {room.id}
-                            {renderFireExtinguishers(room.id, extinguisherCount)}
-                          </div>
-                          {isPositioningMode && (
-                            <div className="text-[10px] mt-1 bg-black/60 text-white px-1 rounded">
-                              {Math.round(room.x)},{Math.round(room.y)} | {Math.round(room.width)}×{Math.round(room.height)}
+                      <PopoverTrigger asChild>
+                        <div
+                          className={`absolute border-2 rounded transition-all duration-200 ${
+                            isPositioningMode 
+                              ? "border-accent bg-accent/20 cursor-move hover:bg-accent/30" 
+                              : "cursor-pointer border-primary bg-background/90 hover:border-primary hover:bg-primary/20 hover:scale-105"
+                          } ${isDragging === room.id || isResizing?.roomId === room.id ? "ring-2 ring-accent ring-opacity-50" : ""}`}
+                          style={{
+                            left: `${room.x}%`,
+                            top: `${room.y}%`,
+                            width: `${room.width}%`,
+                            height: `${room.height}%`
+                          }}
+                          onClick={() => handleRoomClick(room.id)}
+                          onMouseDown={(e) => handleMouseDown(e, room.id, 'move')}
+                        >
+                          {/* Room label with fire extinguishers - replaces original image text */}
+                          <div className={`absolute inset-0 flex items-center justify-center text-sm font-bold transition-opacity duration-200 ${
+                            isPositioningMode 
+                              ? "bg-accent/60 text-white" 
+                              : "text-black"
+                          }`}>
+                            <div className="text-center pointer-events-none">
+                              <div className="flex items-center justify-center">
+                                {room.id}
+                                {renderFireExtinguishers(room.id, extinguisherCount)}
+                              </div>
+                              {isPositioningMode && (
+                                <div className="text-[10px] mt-1 bg-black/60 text-white px-1 rounded">
+                                  {Math.round(room.x)},{Math.round(room.y)} | {Math.round(room.width)}×{Math.round(room.height)}
+                                </div>
+                              )}
                             </div>
+                          </div>
+                          
+                          {/* Resize handles - only show in positioning mode */}
+                          {isPositioningMode && (
+                            <>
+                              {/* Top-left resize handle */}
+                              <div
+                                className="absolute -top-1 -left-1 w-3 h-3 bg-accent border border-white rounded-full cursor-nw-resize hover:scale-125 transition-transform"
+                                onMouseDown={(e) => handleMouseDown(e, room.id, 'resize', 'top-left')}
+                              />
+                              
+                              {/* Top-right resize handle */}
+                              <div
+                                className="absolute -top-1 -right-1 w-3 h-3 bg-accent border border-white rounded-full cursor-ne-resize hover:scale-125 transition-transform"
+                                onMouseDown={(e) => handleMouseDown(e, room.id, 'resize', 'top-right')}
+                              />
+                              
+                              {/* Bottom-left resize handle */}
+                              <div
+                                className="absolute -bottom-1 -left-1 w-3 h-3 bg-accent border border-white rounded-full cursor-sw-resize hover:scale-125 transition-transform"
+                                onMouseDown={(e) => handleMouseDown(e, room.id, 'resize', 'bottom-left')}
+                              />
+                              
+                              {/* Bottom-right resize handle */}
+                              <div
+                                className="absolute -bottom-1 -right-1 w-3 h-3 bg-accent border border-white rounded-full cursor-se-resize hover:scale-125 transition-transform"
+                                onMouseDown={(e) => handleMouseDown(e, room.id, 'resize', 'bottom-right')}
+                              />
+                            </>
                           )}
                         </div>
-                      </div>
-                      
-                      {/* Resize handles - only show in positioning mode */}
-                      {isPositioningMode && (
-                        <>
-                          {/* Top-left resize handle */}
-                          <div
-                            className="absolute -top-1 -left-1 w-3 h-3 bg-accent border border-white rounded-full cursor-nw-resize hover:scale-125 transition-transform"
-                            onMouseDown={(e) => handleMouseDown(e, room.id, 'resize', 'top-left')}
-                          />
-                          
-                          {/* Top-right resize handle */}
-                          <div
-                            className="absolute -top-1 -right-1 w-3 h-3 bg-accent border border-white rounded-full cursor-ne-resize hover:scale-125 transition-transform"
-                            onMouseDown={(e) => handleMouseDown(e, room.id, 'resize', 'top-right')}
-                          />
-                          
-                          {/* Bottom-left resize handle */}
-                          <div
-                            className="absolute -bottom-1 -left-1 w-3 h-3 bg-accent border border-white rounded-full cursor-sw-resize hover:scale-125 transition-transform"
-                            onMouseDown={(e) => handleMouseDown(e, room.id, 'resize', 'bottom-left')}
-                          />
-                          
-                          {/* Bottom-right resize handle */}
-                          <div
-                            className="absolute -bottom-1 -right-1 w-3 h-3 bg-accent border border-white rounded-full cursor-se-resize hover:scale-125 transition-transform"
-                            onMouseDown={(e) => handleMouseDown(e, room.id, 'resize', 'bottom-right')}
-                          />
-                        </>
-                      )}
-                    </div>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-80 p-4">
+                        <Card>
+                          <CardHeader>
+                            <CardTitle>Room {room.id}</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            {roomsData[room.id] ? (
+                              <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-red-500">🧯</span>
+                                  <span>{roomsData[room.id].fireExtinguishers.count} Fire Extinguisher(s)</span>
+                                </div>
+                                {roomsData[room.id].fireExtinguishers.type && (
+                                  <div><strong>Type:</strong> {roomsData[room.id].fireExtinguishers.type}</div>
+                                )}
+                                {roomsData[room.id].fireExtinguishers.capacity && (
+                                  <div><strong>Capacity:</strong> {roomsData[room.id].fireExtinguishers.capacity}</div>
+                                )}
+                                {roomsData[room.id].fireExtinguishers.maintenance && (
+                                  <div><strong>Last Maintenance:</strong> {roomsData[room.id].fireExtinguishers.maintenance}</div>
+                                )}
+                                <Button 
+                                  onClick={() => {
+                                    setEditingRoom(room.id);
+                                    setPopoverOpen(false);
+                                    setPopoverRoomId(null);
+                                  }}
+                                  className="w-full mt-3"
+                                  size="sm"
+                                >
+                                  Edit Room Info
+                                </Button>
+                              </div>
+                            ) : (
+                              <div className="text-center">
+                                <p className="text-muted-foreground mb-3">No information available for this room.</p>
+                                <Button 
+                                  onClick={() => {
+                                    setEditingRoom(room.id);
+                                    setPopoverOpen(false);
+                                    setPopoverRoomId(null);
+                                  }}
+                                  size="sm"
+                                >
+                                  Add Room Info
+                                </Button>
+                              </div>
+                            )}
+                          </CardContent>
+                        </Card>
+                      </PopoverContent>
+                    </Popover>
                   );
-                })}
+                  })}
+                </div>
               </div>
-            </div>
           </div>
 
           {/* Back to Main Map Button - movable */}
