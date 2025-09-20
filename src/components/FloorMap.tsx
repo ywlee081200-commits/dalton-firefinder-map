@@ -198,19 +198,19 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     if (count === 0) return null;
     
     return (
-      <div className="absolute -top-2 -right-2 flex flex-wrap gap-0.5 pointer-events-none max-w-12">
-        {Array.from({ length: Math.min(count, 8) }, (_, i) => (
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full flex items-center gap-0.5 pointer-events-none">
+        {Array.from({ length: Math.min(count, 6) }, (_, i) => (
           <div 
             key={i} 
-            className="text-accent text-xs drop-shadow-lg"
-            style={{ fontSize: '12px' }}
+            className="text-accent drop-shadow-lg"
+            style={{ fontSize: '14px', lineHeight: '1' }}
           >
             🧯
           </div>
         ))}
-        {count > 8 && (
+        {count > 6 && (
           <div className="text-[10px] bg-accent text-accent-foreground rounded-full px-1 font-bold ml-1">
-            +{count - 8}
+            +{count - 6}
           </div>
         )}
       </div>
