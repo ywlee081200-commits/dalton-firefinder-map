@@ -115,13 +115,13 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       { id: "418", x: 30, y: 44, width: 12, height: 10 },
       
       // Facilities (aligned grid)
-      { id: "art room", x: 45, y: 20, width: 18, height: 12 },
+      { id: "Art Room", x: 45, y: 20, width: 18, height: 12 },
       { id: "Bathroom", x: 30, y: 20, width: 12, height: 8 },
       { id: "Stairs", x: 30, y: 30, width: 12, height: 6 },
       
       // ROOF areas (top sections)
-      { id: "ROOF", x: 15, y: 5, width: 30, height: 12 },
-      { id: "ROOF2", x: 47, y: 5, width: 18, height: 12 }
+      { id: "Roof 1", x: 15, y: 5, width: 30, height: 12 },
+      { id: "Roof 2", x: 47, y: 5, width: 18, height: 12 }
     ]
   });
 
