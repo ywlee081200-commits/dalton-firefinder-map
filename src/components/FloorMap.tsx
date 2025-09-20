@@ -48,19 +48,28 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       { id: "Dalton Hall", x: 33.20588104855236, y: 7.370299291355373, width: 17.73529348089623, height: 28.882363102435654 }
     ],
     "1st": [
-      { id: "111", x: 31.029410358943792, y: 51.046927379108, width: 10, height: 8 },
-      { id: "112", x: 31.205880940843258, y: 59.61490112241428, width: 10, height: 8 },
-      { id: "113", x: 30.05882215849673, y: 73.84119236442498, width: 9.85294100223529, height: 5.243738124028326 },
-      { id: "114", x: 29.794116285647533, y: 79.9216898596746, width: 10.294117456983955, height: 6.211089998272584 },
-      { id: "115", x: 30.05882215849673, y: 86.96953922916848, width: 10.029411584134756, height: 5.243738124028326 },
-      { id: "116", x: 42.32352760050955, y: 86.55495985449235, width: 9.499999838436352, height: 6.072896873380543 },
-      { id: "117", x: 42.32352760050955, y: 79.9216898596746, width: 9.588235129386092, height: 5.381931248920367 },
-      { id: "118", x: 41.79411585481116, y: 73.56480611464092, width: 9.85294100223529, height: 4.967351874244258 },
-      { id: "Bath", x: 42.352939400062496, y: 53.112223630619496, width: 5, height: 6.45482812230091 },
-      { id: "stairs", x: 42.352939400062496, y: 59.68019737392576, width: 8, height: 4 },
-      { id: "Office", x: 42.352939400062496, y: 63.75309424730632, width: 6.735294019441703, height: 8.304111245465535 },
-      { id: "Kitchen", x: 40.23529230955982, y: 37.634593642711394, width: 15, height: 15 },
-      { id: "Dalton Hall", x: 33.20588104855236, y: 7.370299291355373, width: 17.73529348089623, height: 28.882363102435654 }
+      // Left column - rooms 111-115 (beautifully aligned)
+      { id: "111", x: 15, y: 20, width: 12, height: 10 },
+      { id: "112", x: 15, y: 32, width: 12, height: 10 },
+      { id: "113", x: 15, y: 44, width: 12, height: 10 },
+      { id: "114", x: 15, y: 56, width: 12, height: 10 },
+      { id: "115", x: 15, y: 68, width: 12, height: 10 },
+      
+      // Middle column - rooms 116-118 (aligned with left column)
+      { id: "116", x: 30, y: 68, width: 12, height: 10 },
+      { id: "117", x: 30, y: 56, width: 12, height: 10 },
+      { id: "118", x: 30, y: 44, width: 12, height: 10 },
+      
+      // Facilities (aligned grid)
+      { id: "Bath", x: 30, y: 20, width: 12, height: 8 },
+      { id: "stairs", x: 30, y: 30, width: 12, height: 6 },
+      { id: "Office", x: 30, y: 38, width: 12, height: 5 },
+      
+      // Kitchen (larger, right side)
+      { id: "Kitchen", x: 45, y: 20, width: 20, height: 18 },
+      
+      // Dalton Hall (top, spanning width)
+      { id: "Dalton Hall", x: 15, y: 5, width: 50, height: 12 }
     ],
     "3rd": [
       { id: "311", x: 31.029410358943792, y: 51.046927379108, width: 10, height: 8 },
@@ -255,16 +264,28 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
         <div className="w-full max-w-6xl relative">
           <div className="bg-card/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-primary/10 overflow-hidden relative">
             <div className="w-full relative">
-              <img 
-                src={floorImages[floor]}
-                alt={`${floor} Floor Plan`}
-                className="w-full h-auto object-contain max-h-[85vh] select-none"
-                style={{ 
-                  imageRendering: 'crisp-edges'
-                }}
-                loading="eager"
-                decoding="sync"
-              />
+              {/* Conditional background - only show image for floors other than 1st */}
+              {floor !== "1st" && (
+                <img 
+                  src={floorImages[floor]}
+                  alt={`${floor} Floor Plan`}
+                  className="w-full h-auto object-contain max-h-[85vh] select-none"
+                  style={{ 
+                    imageRendering: 'crisp-edges'
+                  }}
+                  loading="eager"
+                  decoding="sync"
+                />
+              )}
+              
+              {/* Clean background for 1st floor */}
+              {floor === "1st" && (
+                <div className="w-full h-[70vh] bg-gradient-to-br from-blue-50 to-blue-100 relative">
+                  <div className="absolute top-4 left-4 text-2xl font-bold text-primary">
+                    {floor.toUpperCase()} FLOOR
+                  </div>
+                </div>
+              )}
               
               {/* Clickable room overlays */}
               <div 
