@@ -47,6 +47,23 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Safety Map specific colors
+        safety: {
+          red: "hsl(var(--safety-red))",
+          light: "hsl(var(--safety-red-light))",
+          dark: "hsl(var(--safety-red-dark))",
+        },
+        school: {
+          blue: "hsl(var(--school-blue))",
+          light: "hsl(var(--school-blue-light))",
+          dark: "hsl(var(--school-blue-dark))",
+        },
+        emergency: {
+          bg: "hsl(var(--emergency-bg))",
+        },
+        room: {
+          hover: "hsl(var(--room-hover))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
