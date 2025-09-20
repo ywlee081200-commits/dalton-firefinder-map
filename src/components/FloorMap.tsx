@@ -329,7 +329,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                           : "text-black"
                       }`}>
                         <div className="text-center pointer-events-none">
-                          <div className="bg-white px-2 py-1 rounded shadow-sm border border-gray-200 flex items-center">
+                          <div className="flex items-center justify-center">
                             {room.id}
                             {renderFireExtinguishers(room.id, extinguisherCount)}
                           </div>
