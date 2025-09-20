@@ -29,6 +29,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   const [isDragging, setIsDragging] = useState<string | null>(null);
   const [isResizing, setIsResizing] = useState<{ roomId: string; handle: string } | null>(null);
   const [isDraggingUI, setIsDraggingUI] = useState<string | null>(null);
+  const [dragOffset, setDragOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [uiPositions, setUIPositions] = useState({
     navigation: { x: 85, y: 5 },
     reportButton: { x: 5, y: 85 },
@@ -166,11 +167,12 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     
     if (isDraggingUI) {
+      // Much more responsive UI dragging with better boundaries
       setUIPositions(prev => ({
         ...prev,
         [isDraggingUI]: { 
-          x: Math.max(0, Math.min(95, x)), 
-          y: Math.max(0, Math.min(95, y)) 
+          x: Math.max(2, Math.min(98, x - dragOffset.x)), 
+          y: Math.max(2, Math.min(98, y - dragOffset.y)) 
         }
       }));
     } else if (isDragging) {
@@ -233,10 +235,25 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     setIsDragging(null);
     setIsResizing(null);
     setIsDraggingUI(null);
+    setDragOffset({ x: 0, y: 0 });
   };
 
   const handleUIMouseDown = (e: React.MouseEvent, uiElement: string) => {
     if (isPositioningMode) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const parentRect = e.currentTarget.closest('.min-h-screen')?.getBoundingClientRect();
+      
+      if (parentRect) {
+        const x = ((e.clientX - parentRect.left) / parentRect.width) * 100;
+        const y = ((e.clientY - parentRect.top) / parentRect.height) * 100;
+        const currentPos = uiPositions[uiElement as keyof typeof uiPositions];
+        
+        setDragOffset({
+          x: x - currentPos.x,
+          y: y - currentPos.y
+        });
+      }
+      
       setIsDraggingUI(uiElement);
       e.preventDefault();
       e.stopPropagation();
@@ -280,10 +297,19 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   };
 
   return (
-    <div className="min-h-screen safety-gradient relative overflow-hidden">
+    <div 
+      className="min-h-screen safety-gradient relative overflow-hidden"
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+    >
       {/* Navigation - movable */}
       <div 
-        className={`absolute z-50 ${isPositioningMode ? 'cursor-move border-2 border-accent/50 rounded p-1' : ''}`}
+        className={`absolute z-50 transition-all duration-200 ${
+          isPositioningMode 
+            ? `cursor-move border-2 border-accent/50 rounded p-1 ${isDraggingUI === 'navigation' ? 'scale-105 shadow-2xl border-accent' : ''}` 
+            : ''
+        }`}
         style={{ 
           left: `${uiPositions.navigation.x}%`, 
           top: `${uiPositions.navigation.y}%`,
@@ -301,7 +327,11 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       
       {/* Report Button - movable */}
       <div 
-        className={`absolute z-50 ${isPositioningMode ? 'cursor-move border-2 border-accent/50 rounded p-1' : ''}`}
+        className={`absolute z-50 transition-all duration-200 ${
+          isPositioningMode 
+            ? `cursor-move border-2 border-accent/50 rounded p-1 ${isDraggingUI === 'reportButton' ? 'scale-105 shadow-2xl border-accent' : ''}` 
+            : ''
+        }`}
         style={{ 
           left: `${uiPositions.reportButton.x}%`, 
           top: `${uiPositions.reportButton.y}%`,
@@ -380,9 +410,6 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
               {/* Clickable room overlays */}
               <div 
                 className="absolute inset-0"
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
               >
                 {currentRooms.map((room) => {
                   const roomData = roomsData[room.id];
@@ -532,7 +559,11 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
 
           {/* Back to Main Map Button - movable */}
           <div 
-            className={`absolute z-50 ${isPositioningMode ? 'cursor-move border-2 border-accent/50 rounded p-1' : ''}`}
+            className={`absolute z-50 transition-all duration-200 ${
+              isPositioningMode 
+                ? `cursor-move border-2 border-accent/50 rounded p-1 ${isDraggingUI === 'backButton' ? 'scale-105 shadow-2xl border-accent' : ''}` 
+                : ''
+            }`}
             style={{ 
               left: `${uiPositions.backButton.x}%`, 
               top: `${uiPositions.backButton.y}%`,
