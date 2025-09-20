@@ -24,53 +24,55 @@ export const InteractiveFloorPlan = ({
   const floorConfigs = {
     "2nd": {
       rooms: [
-        // Left column - rooms 211-215
-        { id: "211", name: "211", x: 50, y: 250, width: 50, height: 60 },
-        { id: "212", name: "212", x: 50, y: 320, width: 50, height: 60 },
-        { id: "213", name: "213", x: 50, y: 390, width: 50, height: 60 },
-        { id: "214", name: "214", x: 50, y: 460, width: 50, height: 60 },
-        { id: "215", name: "215", x: 50, y: 530, width: 50, height: 60 },
+        // Left vertical column - rooms 211-215 (from top to bottom)
+        { id: "211", name: "211", x: 60, y: 280, width: 45, height: 50 },
+        { id: "212", name: "212", x: 60, y: 340, width: 45, height: 50 },
+        { id: "213", name: "213", x: 60, y: 400, width: 45, height: 50 },
+        { id: "214", name: "214", x: 60, y: 460, width: 45, height: 50 },
+        { id: "215", name: "215", x: 60, y: 520, width: 45, height: 50 },
         
-        // Right column - rooms 216-218  
-        { id: "216", name: "216", x: 110, y: 530, width: 50, height: 60 },
-        { id: "217", name: "217", x: 110, y: 460, width: 50, height: 60 },
-        { id: "218", name: "218", x: 110, y: 390, width: 50, height: 60 },
+        // Middle section rooms (from bottom to top)
+        { id: "216", name: "216", x: 120, y: 520, width: 45, height: 50 },
+        { id: "217", name: "217", x: 120, y: 460, width: 45, height: 50 },
+        { id: "218", name: "218", x: 120, y: 400, width: 45, height: 50 },
         
-        // Middle section
-        { id: "Bathroom", name: "Bathroom", x: 110, y: 250, width: 40, height: 50 },
-        { id: "Office", name: "Office", x: 110, y: 310, width: 40, height: 70 },
+        // Bath and Office in middle
+        { id: "Bath", name: "Bath", x: 120, y: 280, width: 35, height: 40 },
+        { id: "stairs", name: "stairs", x: 120, y: 330, width: 35, height: 30 },
+        { id: "Office", name: "Office", x: 120, y: 370, width: 35, height: 25 },
         
-        // Lab rooms
-        { id: "Lab1", name: "Lab1", x: 170, y: 200, width: 60, height: 50 },
-        { id: "Lab2", name: "Lab2", x: 170, y: 260, width: 60, height: 50 },
+        // Lab rooms on right side
+        { id: "Lab1", name: "Lab1", x: 180, y: 280, width: 65, height: 45 },
+        { id: "Lab2", name: "Lab2", x: 180, y: 335, width: 65, height: 45 },
         
         // Large Dalton Hall at top
-        { id: "Dalton Hall", name: "Dalton Hall", x: 160, y: 60, width: 280, height: 130 }
+        { id: "Dalton Hall", name: "Dalton Hall", x: 120, y: 80, width: 320, height: 180 }
       ]
     },
     "1st": {
       rooms: [
-        // Left column - rooms 111-115
-        { id: "111", name: "111", x: 50, y: 250, width: 50, height: 60 },
-        { id: "112", name: "112", x: 50, y: 320, width: 50, height: 60 },
-        { id: "113", name: "113", x: 50, y: 390, width: 50, height: 60 },
-        { id: "114", name: "114", x: 50, y: 460, width: 50, height: 60 },
-        { id: "115", name: "115", x: 50, y: 530, width: 50, height: 60 },
+        // Left vertical column - rooms 111-115 (from top to bottom)
+        { id: "111", name: "111", x: 60, y: 280, width: 45, height: 50 },
+        { id: "112", name: "112", x: 60, y: 340, width: 45, height: 50 },
+        { id: "113", name: "113", x: 60, y: 400, width: 45, height: 50 },
+        { id: "114", name: "114", x: 60, y: 460, width: 45, height: 50 },
+        { id: "115", name: "115", x: 60, y: 520, width: 45, height: 50 },
         
-        // Right column - rooms 116-118
-        { id: "116", name: "116", x: 110, y: 530, width: 50, height: 60 },
-        { id: "117", name: "117", x: 110, y: 460, width: 50, height: 60 },
-        { id: "118", name: "118", x: 110, y: 390, width: 50, height: 60 },
+        // Middle section rooms (from bottom to top)
+        { id: "116", name: "116", x: 120, y: 520, width: 45, height: 50 },
+        { id: "117", name: "117", x: 120, y: 460, width: 45, height: 50 },
+        { id: "118", name: "118", x: 120, y: 400, width: 45, height: 50 },
         
-        // Middle section
-        { id: "Bathroom", name: "Bathroom", x: 110, y: 250, width: 40, height: 50 },
-        { id: "Office", name: "Office", x: 110, y: 310, width: 40, height: 70 },
+        // Bath and Office in middle
+        { id: "Bath", name: "Bath", x: 120, y: 280, width: 35, height: 40 },
+        { id: "stairs", name: "stairs", x: 120, y: 330, width: 35, height: 30 },
+        { id: "Office", name: "Office", x: 120, y: 370, width: 35, height: 25 },
         
-        // Kitchen (replaces labs on 1st floor)
-        { id: "Kitchen", name: "Kitchen", x: 170, y: 220, width: 80, height: 80 },
+        // Kitchen on right side (replaces labs)
+        { id: "Kitchen", name: "Kitchen", x: 180, y: 280, width: 100, height: 100 },
         
         // Large Dalton Hall at top
-        { id: "Dalton Hall", name: "Dalton Hall", x: 160, y: 60, width: 280, height: 130 }
+        { id: "Dalton Hall", name: "Dalton Hall", x: 120, y: 80, width: 320, height: 180 }
       ]
     },
     "3rd": {
@@ -124,9 +126,9 @@ export const InteractiveFloorPlan = ({
     if (!canvasRef.current) return;
 
     const canvas = new FabricCanvas(canvasRef.current, {
-      width: 800,
-      height: 800,
-      backgroundColor: "#f8fafc",
+      width: 700,
+      height: 600,
+      backgroundColor: "#ffffff",
     });
 
     setFabricCanvas(canvas);
@@ -145,7 +147,7 @@ export const InteractiveFloorPlan = ({
 
     // Clear canvas
     canvas.clear();
-    canvas.backgroundColor = "#f8fafc";
+    canvas.backgroundColor = "#ffffff";
 
     // Draw floor number
     const floorNumber = new Text(`${floor.toUpperCase()}F`, {
@@ -157,29 +159,29 @@ export const InteractiveFloorPlan = ({
     });
     canvas.add(floorNumber);
 
-    // Draw decorative staircase pattern (matching original design)
+    // Draw decorative staircase pattern (right side, matching original)
     const staircase = new Rect({
-      left: 500,
-      top: 300,
-      width: 180,
-      height: 400,
+      left: 520,
+      top: 180,
+      width: 120,
+      height: 350,
       fill: "linear-gradient(45deg, #f59e0b, #d97706, #92400e)",
-      rx: 15,
-      ry: 15
+      rx: 10,
+      ry: 10
     });
     canvas.add(staircase);
 
-    // Draw main building outline (matching proportions)
+    // Draw main building outline (exact proportions from original)
     const buildingOutline = new Rect({
-      left: 40,
-      top: 40,
-      width: 450,
-      height: 650,
+      left: 50,
+      top: 70,
+      width: 460,
+      height: 510,
       fill: "transparent",
-      stroke: "#374151",
-      strokeWidth: 3,
-      rx: 8,
-      ry: 8
+      stroke: "#000000",
+      strokeWidth: 2,
+      rx: 0,
+      ry: 0
     });
     canvas.add(buildingOutline);
 
