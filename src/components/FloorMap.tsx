@@ -303,7 +303,7 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                           : "text-black"
                       }`}>
                         <div className="text-center pointer-events-none">
-                          <div className="bg-white/90 px-1 rounded shadow-sm">{room.id}</div>
+                          <div className="bg-white px-2 py-1 rounded shadow-sm border border-gray-200">{room.id}</div>
                           {isPositioningMode && (
                             <div className="text-[10px] mt-1 bg-black/60 text-white px-1 rounded">
                               {Math.round(room.x)},{Math.round(room.y)} | {Math.round(room.width)}×{Math.round(room.height)}
