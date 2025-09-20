@@ -19,6 +19,8 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
   const [editingRoom, setEditingRoom] = useState<string | null>(null);
   const [roomsData, setRoomsData] = useState<Record<string, RoomData>>({});
+  const [isPositioningMode, setIsPositioningMode] = useState(false);
+  const [isDragging, setIsDragging] = useState<string | null>(null);
 
   const floorImages = {
     "1st": floor1Image,
@@ -27,8 +29,9 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     "4th": floor4Image
   };
 
-  // Room positions based on original image coordinates (percentage-based for responsiveness)
-  const roomPositions = {
+  // Room positions will be managed in state now
+
+  const [roomPositions, setRoomPositions] = useState({
     "2nd": [
       // Left column - rooms 211-215 (precisely positioned)
       { id: "211", x: 8, y: 35, width: 10, height: 8 },
@@ -121,13 +124,42 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       { id: "ROOF", x: 19, y: 8, width: 50, height: 15 },
       { id: "ROOF2", x: 19, y: 24, width: 25, height: 12 }
     ]
-  };
+  });
 
   const currentRooms = roomPositions[floor] || [];
 
   const handleRoomClick = (roomId: string) => {
+    if (isPositioningMode) return; // Don't open edit dialog in positioning mode
     setEditingRoom(roomId);
     setSelectedRoom(null);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent, roomId: string) => {
+    if (isPositioningMode) {
+      setIsDragging(roomId);
+      e.preventDefault();
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !isPositioningMode) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setRoomPositions(prev => ({
+      ...prev,
+      [floor]: prev[floor].map(room => 
+        room.id === isDragging 
+          ? { ...room, x: Math.max(0, Math.min(95, x - room.width/2)), y: Math.max(0, Math.min(95, y - room.height/2)) }
+          : room
+      )
+    }));
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(null);
   };
 
   const handleRoomUpdate = (roomId: string, data: RoomData) => {
@@ -136,6 +168,11 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
       [roomId]: data
     }));
     setEditingRoom(null);
+  };
+
+  const exportPositions = () => {
+    console.log(`Room positions for ${floor} floor:`, JSON.stringify(currentRooms, null, 2));
+    alert(`Room positions logged to console! Check developer tools.`);
   };
 
   const renderFireExtinguishers = (roomId: string, count: number) => {
@@ -152,6 +189,34 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
     <div className="min-h-screen safety-gradient relative overflow-hidden">
       <Navigation onFloorSelect={onFloorSelect} currentFloor={floor} />
       <ReportButton />
+      
+      {/* Positioning Mode Controls */}
+      <div className="absolute top-4 left-4 z-50 space-y-2">
+        <button
+          onClick={() => setIsPositioningMode(!isPositioningMode)}
+          className={`px-4 py-2 text-sm rounded-lg font-medium transition-all duration-300 ${
+            isPositioningMode 
+              ? "bg-accent text-accent-foreground shadow-lg" 
+              : "bg-muted text-muted-foreground hover:bg-muted/80"
+          }`}
+        >
+          {isPositioningMode ? "🔒 Exit Positioning" : "📐 Position Rooms"}
+        </button>
+        
+        {isPositioningMode && (
+          <div className="space-y-1">
+            <button
+              onClick={exportPositions}
+              className="block w-full px-3 py-1 text-xs bg-primary text-primary-foreground rounded"
+            >
+              Export Positions
+            </button>
+            <div className="text-xs text-white bg-black/60 p-2 rounded">
+              Drag rooms to reposition them
+            </div>
+          </div>
+        )}
+      </div>
 
       <main className="container mx-auto px-4 py-20 flex items-center justify-center min-h-screen">
         <div className="w-full max-w-6xl relative">
@@ -169,7 +234,12 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
               />
               
               {/* Clickable room overlays */}
-              <div className="absolute inset-0">
+              <div 
+                className="absolute inset-0"
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+              >
                 {currentRooms.map((room) => {
                   const roomData = roomsData[room.id];
                   const extinguisherCount = roomData?.fireExtinguishers?.count || 0;
@@ -177,7 +247,11 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                   return (
                     <div
                       key={room.id}
-                      className="absolute cursor-pointer border-2 border-primary/30 hover:border-primary hover:bg-primary/20 rounded transition-all duration-200 hover:scale-105"
+                      className={`absolute border-2 rounded transition-all duration-200 ${
+                        isPositioningMode 
+                          ? "border-accent bg-accent/20 cursor-move hover:bg-accent/30" 
+                          : "cursor-pointer border-primary/30 hover:border-primary hover:bg-primary/20 hover:scale-105"
+                      } ${isDragging === room.id ? "ring-2 ring-accent ring-opacity-50" : ""}`}
                       style={{
                         left: `${room.x}%`,
                         top: `${room.y}%`,
@@ -185,13 +259,24 @@ export const FloorMap = ({ floor, onFloorSelect, onBackToHome }: FloorMapProps) 
                         height: `${room.height}%`
                       }}
                       onClick={() => handleRoomClick(room.id)}
-                      title={`Click to edit ${room.id} fire extinguisher data`}
+                      onMouseDown={(e) => handleMouseDown(e, room.id)}
                     >
                       {renderFireExtinguishers(room.id, extinguisherCount)}
                       
-                      {/* Room label - always visible now */}
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-xs font-bold rounded opacity-80 hover:opacity-100 transition-opacity duration-200">
-                        {room.id}
+                      {/* Room label */}
+                      <div className={`absolute inset-0 flex items-center justify-center text-xs font-bold rounded transition-opacity duration-200 ${
+                        isPositioningMode 
+                          ? "bg-accent/60 text-white" 
+                          : "bg-black/40 text-white opacity-80 hover:opacity-100"
+                      }`}>
+                        <div className="text-center">
+                          <div>{room.id}</div>
+                          {isPositioningMode && (
+                            <div className="text-[10px] mt-1">
+                              {Math.round(room.x)},{Math.round(room.y)}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   );
