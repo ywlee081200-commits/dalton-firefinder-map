@@ -7,13 +7,11 @@ export const ReportButton = () => {
   };
 
   return (
-    <div className="absolute bottom-4 left-4 z-50">
+    <div>
       <Button 
         onClick={handleReport}
         className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-        size="lg"
       >
-        <AlertTriangle className="h-5 w-5 mr-2" />
         Report
       </Button>
     </div>

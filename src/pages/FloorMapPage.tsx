@@ -14,6 +14,10 @@ const FloorMapPage = () => {
     navigate("/");
   };
 
+  const handleDonationPage = () => {
+    navigate("/");
+  };
+
   // Validate floor number
   const validFloors: FloorNumber[] = ["1st", "2nd", "3rd", "4th"];
   const currentFloor = floorNumber as FloorNumber;

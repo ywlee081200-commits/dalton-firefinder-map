@@ -19,7 +19,7 @@ export const Navigation = ({ onFloorSelect, currentFloor }: NavigationProps) => 
   };
 
   return (
-    <nav className="absolute top-4 right-4 z-50">
+    <nav>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button 

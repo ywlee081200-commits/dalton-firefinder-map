@@ -154,3 +154,11 @@
     background: linear-gradient(135deg, hsl(var(--emergency-bg)), hsl(var(--background)));
   }
 }
+
+.gp {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
