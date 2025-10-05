@@ -1,6 +1,5 @@
 import { Navigation } from "./Navigation.tsx";
 import { ReportButton } from "./ReportButton.tsx";
-import { DonationButton } from "./DonationButton.tsx";
 import daltonEntrance from "@/assets/dalton-entrance.jpg";
 import { Button } from "@/components/ui/button";
 
