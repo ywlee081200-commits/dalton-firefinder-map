@@ -36,7 +36,7 @@ export const DonationScreen = ({ onFloorSelect, onBackToHome }: DonationScreenPr
               <div className="flex flex-wrap gap-4 justify-center">
                 <div>
                   <p>
-                    The Incheon Firefighting Department accepts donations via the program "Miracle of 119". The department aids individuals who suffer from conflagrations, burn victims who lack finantial support, and neighbors in poor situations confronted while missions. ]
+                    The Incheon Firefighting Department accepts donations via the program "Miracle of 119". The department aids individuals who suffer from conflagrations, burn victims who lack finantial support, and neighbors in poor situations confronted while missions. 
                     They accept 119 Korean won daily, summing to a total of 3570 won a month from each donor. You can start supporting through the link below.
                   </p>
                 </div> 
